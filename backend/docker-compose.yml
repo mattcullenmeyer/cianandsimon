@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  cianandsimon-dynamodb:
+    command: '-jar DynamoDBLocal.jar -sharedDb -dbPath ./data'
+    image: amazon/dynamodb-local:latest
+    container_name: cianandsimon-dynamodb
+    user: root
+    ports:
+      - '8000:8000'
+    volumes:
+      - dynamodb-data:/home/dynamodblocal/data
+    working_dir: /home/dynamodblocal
+
+volumes:
+  dynamodb-data:

@@ -87,15 +87,15 @@ export const button = defineRecipe({
       },
       plain: {
         color: 'colorPalette.plain.fg',
-        _hover: {
-          bg: 'colorPalette.plain.bg.hover',
-        },
-        _active: {
-          bg: 'colorPalette.plain.bg.active',
-        },
-        _on: {
-          bg: 'colorPalette.plain.bg.active',
-        },
+        // _hover: {
+        //   bg: 'colorPalette.plain.bg.hover',
+        // },
+        // _active: {
+        //   bg: 'colorPalette.plain.bg.active',
+        // },
+        // _on: {
+        //   bg: 'colorPalette.plain.bg.active',
+        // },
       },
     },
     size: {
@@ -125,7 +125,7 @@ export const button = defineRecipe({
         minW: '10',
         textStyle: 'sm',
         px: '3.5',
-        _icon: { boxSize: '5' },
+        // _icon: { boxSize: '5' },
       },
       lg: {
         h: '11',

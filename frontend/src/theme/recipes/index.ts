@@ -1,3 +1,7 @@
+import { radioGroup } from "./radio-group";
+import { field } from "./field";
+import { input } from "./input";
+import { skeleton } from "./skeleton";
 import { checkbox } from "./checkbox";
 import { text } from './text';
 import { card } from './card';
@@ -12,7 +16,11 @@ export const recipes = {
   absoluteCenter,
   spinner,
   text,
-  checkbox
+  checkbox,
+  skeleton,
+  input,
+  field,
+  radioGroup
 };
 export const slotRecipes = {
   card,

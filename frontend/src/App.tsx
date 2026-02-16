@@ -1,56 +1,53 @@
-import {
-  Backpack,
-  Footprints,
-  Laugh,
-  Shirt,
-  Soup,
-  SunMedium,
-} from 'lucide-react';
-import { Box, Card, Text } from './components/ui';
-import { ToDoButton } from './components/to-do-button';
+import { BrushCleaning, HandCoins, Landmark } from 'lucide-react';
+import { Box } from './components/ui';
+import { NavButton } from './components/nav-button';
+import { useState } from 'react';
+import { MorningChoresPage } from './pages/morning-chores';
+import { BalancePage } from './pages/balance';
+import { DepositPage } from './pages/deposit';
 
 function App() {
+  const [page, setPage] = useState<'chores' | 'balance' | 'deposit'>('chores');
+
   return (
-    <Box
-      bg="slate.50"
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      p="4"
-      minHeight="dvh"
-    >
-      <Text color="fg.default" textStyle="4xl" fontWeight="normal" pb="4">
-        Morning
-      </Text>
+    <Box bg="slate.50" display="flex" flexDirection="column" minHeight="100dvh">
+      <Box
+        display="flex"
+        flexDirection="column"
+        flexGrow={1}
+        alignItems="center"
+        p="4"
+      >
+        {page === 'chores' && <MorningChoresPage />}
+        {page === 'balance' && <BalancePage />}
+        {page === 'deposit' && <DepositPage />}
+      </Box>
 
-      <Box display="flex" width="full" gap="3">
-        <Card.Root width="full">
-          <Card.Header p="4">
-            <Card.Title>Cian</Card.Title>
-          </Card.Header>
-          <Card.Body p="4" pt="0" display="flex" flexDirection="column" gap="2">
-            <ToDoButton label="Clothes" icon={<Shirt />} />
-            <ToDoButton label="Breakfast" icon={<Soup />} />
-            <ToDoButton label="Teeth" icon={<Laugh />} />
-            <ToDoButton label="Sunscreen" icon={<SunMedium />} />
-            <ToDoButton label="Shoes" icon={<Footprints />} />
-            <ToDoButton label="Backpack" icon={<Backpack />} />
-          </Card.Body>
-        </Card.Root>
+      <Box
+        paddingY="4"
+        bg="white"
+        borderTop="1px solid"
+        borderColor="colorPalette.outline.border"
+        display="flex"
+        justifyContent="space-around"
+      >
+        <NavButton
+          label="Chores"
+          icon={<BrushCleaning strokeWidth={1.5} size={32} />}
+          onClick={() => setPage('chores')}
+        />
 
-        <Card.Root width="full">
-          <Card.Header p="4">
-            <Card.Title>Simon</Card.Title>
-          </Card.Header>
-          <Card.Body p="4" pt="0" display="flex" flexDirection="column" gap="2">
-            <ToDoButton label="Clothes" icon={<Shirt />} />
-            <ToDoButton label="Breakfast" icon={<Soup />} />
-            <ToDoButton label="Teeth" icon={<Laugh />} />
-            <ToDoButton label="Sunscreen" icon={<SunMedium />} />
-            <ToDoButton label="Shoes" icon={<Footprints />} />
-            <ToDoButton label="Backpack" icon={<Backpack />} />
-          </Card.Body>
-        </Card.Root>
+        <NavButton
+          label="Balance"
+          icon={<Landmark strokeWidth={1.5} size={32} />}
+          onClick={() => setPage('balance')}
+        />
+
+        <NavButton
+          label="Deposit"
+          icon={<HandCoins strokeWidth={1.5} size={32} />}
+          onClick={() => setPage('deposit')}
+        />
       </Box>
     </Box>
   );

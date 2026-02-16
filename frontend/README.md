@@ -72,6 +72,8 @@ export default defineConfig([
 ]);
 ```
 
+```bash
 pnpm build
 aws s3 sync dist/ s3://cianandsimon.xyz --profile default
-aws cloudfront create-invalidation --distribution-id EOIC8GYMH9AO6 --paths '/\*' --profile default
+aws cloudfront create-invalidation --distribution-id EOIC8GYMH9AO6 --paths '/*' --profile default
+```

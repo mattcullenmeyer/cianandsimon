@@ -25,7 +25,12 @@ router.post('/', async (req, res) => {
 
   const { name, amount, description } = result.data;
   const now = new Date();
-  const date = `${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getDate()).padStart(2, '0')}/${now.getFullYear()}`;
+  const date = now.toLocaleDateString('en-US', {
+    timeZone: 'America/Denver',
+    month: '2-digit',
+    day: '2-digit',
+    year: 'numeric',
+  });
 
   await Promise.all([
     dynamodb.send(

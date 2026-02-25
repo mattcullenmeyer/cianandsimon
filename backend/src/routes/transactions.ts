@@ -60,15 +60,30 @@ router.post('/', async (req, res) => {
 
 router.get('/:name', async (req, res) => {
   const name = req.params.name;
+  const start = req.query.start as string | undefined;
+  const end = req.query.end as string | undefined;
+
+  const keyCondition =
+    start && end
+      ? 'PK = :pk AND SK BETWEEN :skStart AND :skEnd'
+      : 'PK = :pk AND begins_with(SK, :sk)';
+
+  const expressionValues: Record<string, { S: string }> = {
+    ':pk': { S: `NAME#${name}` },
+  };
+
+  if (start && end) {
+    expressionValues[':skStart'] = { S: `TRANSACTION#${start}` };
+    expressionValues[':skEnd'] = { S: `TRANSACTION#${end}T\uffff` };
+  } else {
+    expressionValues[':sk'] = { S: 'TRANSACTION#' };
+  }
 
   const result = await dynamodb.send(
     new QueryCommand({
       TableName: process.env.DYNAMODB_TABLE_NAME,
-      KeyConditionExpression: 'PK = :pk AND begins_with(SK, :sk)',
-      ExpressionAttributeValues: {
-        ':pk': { S: `NAME#${name}` },
-        ':sk': { S: 'TRANSACTION#' },
-      },
+      KeyConditionExpression: keyCondition,
+      ExpressionAttributeValues: expressionValues,
       ScanIndexForward: false,
     })
   );

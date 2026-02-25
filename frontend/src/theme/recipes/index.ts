@@ -1,3 +1,4 @@
+import { table } from "./table";
 import { radioGroup } from "./radio-group";
 import { field } from "./field";
 import { input } from "./input";
@@ -20,7 +21,8 @@ export const recipes = {
   skeleton,
   input,
   field,
-  radioGroup
+  radioGroup,
+  table
 };
 export const slotRecipes = {
   card,

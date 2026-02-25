@@ -146,6 +146,11 @@ export const ChoresCard = ({ title, localStorageKey }: ChoresCardProps) => {
                   setNewChore('');
                   setIsAdding(false);
                 }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.currentTarget.blur();
+                  }
+                }}
               />
             )}
           </>

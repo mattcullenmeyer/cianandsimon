@@ -13,7 +13,7 @@ variable "default_name" {
   description = "Default name to use for resources (eg zendog)"
 }
 
-# variable "frontend_domain" {
-#   type        = string
-#   description = "Root domain of frontend site"
-# }
+variable "frontend_domain" {
+  type        = string
+  description = "Root domain of frontend site"
+}

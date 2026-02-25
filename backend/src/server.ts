@@ -8,7 +8,7 @@ import transactionsRoutes from './routes/transactions';
 
 export const app: Application = express();
 
-app.use(cors({ origin: '*' }));
+app.use(cors({ origin: process.env.FRONTEND_DOMAIN }));
 app.use(express.json());
 app.use(pinoHttp({ logger }));
 

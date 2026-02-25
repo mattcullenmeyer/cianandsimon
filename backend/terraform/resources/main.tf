@@ -101,7 +101,7 @@ resource "aws_lambda_function" "main" {
 
   environment {
     variables = {
-      # FRONTEND_DOMAIN     = var.frontend_domain
+      FRONTEND_DOMAIN     = var.frontend_domain
       DYNAMODB_TABLE_NAME = var.default_name
     }
   }

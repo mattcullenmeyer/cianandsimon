@@ -2,7 +2,7 @@ import { BrushCleaning, HandCoins, Landmark } from 'lucide-react';
 import { Box } from './components/ui';
 import { NavButton } from './components/nav-button';
 import { useState } from 'react';
-import { MorningChoresPage } from './pages/morning-chores';
+import { ChoresPage } from './pages/chores';
 import { BalancePage } from './pages/balance';
 import { DepositPage } from './pages/deposit';
 
@@ -10,15 +10,16 @@ function App() {
   const [page, setPage] = useState<'chores' | 'balance' | 'deposit'>('chores');
 
   return (
-    <Box bg="slate.50" display="flex" flexDirection="column" minHeight="100dvh">
+    <Box bg="slate.50" display="flex" flexDirection="column" height="100dvh">
       <Box
         display="flex"
         flexDirection="column"
         flexGrow={1}
         alignItems="center"
         p="4"
+        overflow="auto"
       >
-        {page === 'chores' && <MorningChoresPage />}
+        {page === 'chores' && <ChoresPage />}
         {page === 'balance' && <BalancePage />}
         {page === 'deposit' && <DepositPage />}
       </Box>

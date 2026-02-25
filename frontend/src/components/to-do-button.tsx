@@ -1,42 +1,45 @@
-import { useState } from 'react';
+import { CircleMinus } from 'lucide-react';
 import { Box, Button, Checkbox } from './ui';
 
 interface ToDoButtonProps {
   label: string;
-  icon: React.ReactNode;
-  storageKey: string;
+  checked: boolean;
+  onToggle: () => void;
+  isEditing?: boolean;
 }
 
-export const ToDoButton = ({ label, icon, storageKey }: ToDoButtonProps) => {
-  const [isChecked, setIsChecked] = useState(
-    () => localStorage.getItem(storageKey) === 'true'
-  );
-
+export const ToDoButton = ({
+  label,
+  checked,
+  onToggle,
+  isEditing,
+}: ToDoButtonProps) => {
   return (
     <Button
       variant="outline"
-      textDecoration={isChecked ? 'line-through' : 'none'}
-      color={isChecked ? 'fg.subtle' : 'fg.default'}
+      textDecoration={!isEditing && checked ? 'line-through' : 'none'}
+      color={!isEditing && checked ? 'fg.subtle' : 'fg.default'}
+      fontWeight="medium"
       width="full"
-      onClick={() =>
-        setIsChecked((prev) => {
-          localStorage.setItem(storageKey, String(!prev));
-          return !prev;
-        })
-      }
+      onClick={onToggle}
     >
       <Box display="flex" gap="2" alignItems="center">
-        <Box borderRadius="full" bg="teal.100" p="1">
-          {icon}
-        </Box>
+        {!isEditing && (
+          <Checkbox.Root variant="solid" checked={checked}>
+            <Checkbox.HiddenInput />
+            <Checkbox.Control
+              backgroundColor={checked ? 'green.700' : 'transparent'}
+              borderColor={checked ? 'green.700' : 'fg.subtle'}
+            >
+              <Checkbox.Indicator height="20px" width="20px" />
+            </Checkbox.Control>
+          </Checkbox.Root>
+        )}
+
+        {isEditing && <CircleMinus size={20} />}
+
         {label}
       </Box>
-      <Checkbox.Root variant="solid" checked={isChecked}>
-        <Checkbox.HiddenInput />
-        <Checkbox.Control>
-          <Checkbox.Indicator height="20px" width="20px" />
-        </Checkbox.Control>
-      </Checkbox.Root>
     </Button>
   );
 };

@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Box, Card, Skeleton, Text } from '@/components/ui';
+import { config } from '@/config';
 
 export const BalancePage = () => {
   const [cianBalance, setCianBalance] = useState<number | null>(null);
   const [simonBalance, setSimonBalance] = useState<number | null>(null);
 
   useEffect(() => {
-    fetch('https://api.cianandsimon.xyz/balances/Cian')
-      .then((res) => res.json())
-      .then((data) => setCianBalance(data.balance));
-
-    fetch('https://api.cianandsimon.xyz/balances/Simon')
-      .then((res) => res.json())
-      .then((data) => setSimonBalance(data.balance));
+    Promise.all([
+      fetch(`${config.apiEndpoint}/balances/Cian`).then((res) => res.json()),
+      fetch(`${config.apiEndpoint}/balances/Simon`).then((res) => res.json()),
+    ]).then(([cianData, simonData]) => {
+      setCianBalance(cianData.balance);
+      setSimonBalance(simonData.balance);
+    });
   }, []);
 
   return (

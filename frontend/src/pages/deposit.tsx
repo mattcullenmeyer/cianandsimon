@@ -8,6 +8,7 @@ import {
   Button,
 } from '@/components/ui';
 import { useState } from 'react';
+import { config } from '@/config';
 
 const chores = [
   'Get ready for school',
@@ -44,7 +45,7 @@ export const DepositPage = () => {
 
   const handleSubmit = () => {
     setIsLoading(true);
-    fetch('https://api.cianandsimon.xyz/transactions', {
+    fetch(`${config.apiEndpoint}/transactions`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -64,8 +65,8 @@ export const DepositPage = () => {
         Deposit
       </Text>
 
-      <Box display="flex" width="full" paddingX="16">
-        <Card.Root width="full">
+      <Box display="flex" width="full" justifyContent="center">
+        <Card.Root width="full" maxWidth="400px">
           <Card.Header p="4">
             <Card.Title>New deposit</Card.Title>
           </Card.Header>
@@ -138,7 +139,12 @@ export const DepositPage = () => {
               />
             </Field.Root>
 
-            <Button loading={isLoading} onClick={handleSubmit}>
+            <Button
+              loading={isLoading}
+              onClick={handleSubmit}
+              display="flex"
+              justifyContent="center"
+            >
               Submit
             </Button>
           </Card.Body>

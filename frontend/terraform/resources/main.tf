@@ -59,12 +59,19 @@ resource "aws_s3_bucket_public_access_block" "main" {
 
 data "aws_iam_policy_document" "main" {
   statement {
+    effect    = "Allow"
     actions   = ["s3:GetObject"]
     resources = ["${aws_s3_bucket.main.arn}/*"]
 
     principals {
-      type        = "AWS"
-      identifiers = [aws_cloudfront_origin_access_identity.main.iam_arn]
+      type        = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceArn"
+      values   = [aws_cloudfront_distribution.main.arn]
     }
   }
 }
@@ -74,9 +81,6 @@ resource "aws_s3_bucket_policy" "main" {
   bucket = aws_s3_bucket.main.id
   policy = data.aws_iam_policy_document.main.json
 }
-
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_origin_access_identity
-resource "aws_cloudfront_origin_access_identity" "main" {}
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_response_headers_policy
 resource "aws_cloudfront_response_headers_policy" "main" {
@@ -155,20 +159,25 @@ function handler(event) {
 EOF
 }
 
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_origin_access_control.html
+resource "aws_cloudfront_origin_access_control" "main" {
+  name                              = "${var.name}-origin-access-control"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
+}
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution
 resource "aws_cloudfront_distribution" "main" {
   origin {
-    domain_name = aws_s3_bucket.main.bucket_regional_domain_name
-    origin_id   = aws_s3_bucket.main.id
-
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.main.cloudfront_access_identity_path
-    }
+    domain_name              = aws_s3_bucket.main.bucket_regional_domain_name
+    origin_access_control_id = aws_cloudfront_origin_access_control.main.id
+    origin_id                = aws_s3_bucket.main.id
   }
 
   enabled             = true
   default_root_object = "index.html"
+
   aliases = [
     var.domain_name,
     "www.${var.domain_name}"

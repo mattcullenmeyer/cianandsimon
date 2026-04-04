@@ -1,3 +1,5 @@
+// https://github.com/chakra-ui/park-ui/blob/main/packages/preset/src/recipes/checkbox.ts
+
 import { checkboxAnatomy } from '@ark-ui/react/anatomy';
 import { defineSlotRecipe } from '@pandacss/dev';
 
@@ -22,7 +24,7 @@ export const checkbox = defineSlotRecipe({
       flexShrink: '0',
       borderWidth: '1px', // 1px
       borderColor: 'transparent',
-      borderRadius: 'full',
+      borderRadius: 'l1',
       cursor: 'pointer',
       focusVisibleRing: 'outside',
 

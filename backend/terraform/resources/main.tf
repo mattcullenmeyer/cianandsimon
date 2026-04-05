@@ -36,7 +36,7 @@ resource "aws_acm_certificate_validation" "main" {
   certificate_arn = aws_acm_certificate.main.arn
 }
 
-resource "aws_iam_role" "main" {
+resource "aws_iam_role" "lambda" {
   name = "${var.default_name}-lambda-execution-role"
 
   assume_role_policy = jsonencode({
@@ -53,7 +53,7 @@ resource "aws_iam_role" "main" {
   })
 }
 
-resource "aws_iam_policy" "main" {
+resource "aws_iam_policy" "lambda" {
   name = "${var.default_name}-lambda-execution-policy"
 
   policy = jsonencode({
@@ -73,9 +73,9 @@ resource "aws_iam_policy" "main" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "main" {
-  role       = aws_iam_role.main.name
-  policy_arn = aws_iam_policy.main.arn
+resource "aws_iam_role_policy_attachment" "lambda" {
+  role       = aws_iam_role.lambda.name
+  policy_arn = aws_iam_policy.lambda.arn
 }
 
 resource "aws_cloudwatch_log_group" "lambda" {
@@ -90,7 +90,7 @@ resource "aws_lambda_function" "main" {
   filename         = "${path.module}/lambda.zip"
   source_code_hash = filebase64sha256("${path.module}/lambda.zip")
   function_name    = var.default_name
-  role             = aws_iam_role.main.arn
+  role             = aws_iam_role.lambda.arn
   handler          = "lambda.handler"
 
   # https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html

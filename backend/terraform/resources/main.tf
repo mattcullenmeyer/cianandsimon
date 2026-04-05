@@ -155,6 +155,8 @@ resource "aws_lambda_function" "main" {
   publish = true
 
   architectures = ["arm64"]
+  memory_size   = 512
+  timeout       = 5
 
   environment {
     variables = {
@@ -163,6 +165,7 @@ resource "aws_lambda_function" "main" {
       JWT_SECRET          = var.jwt_secret
       LAMBDA_ARN          = "arn:aws:lambda:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:function:${var.default_name}"
       SCHEDULER_ROLE_ARN  = aws_iam_role.scheduler.arn
+      SCHEDULE_GROUP_NAME = aws_scheduler_schedule_group.main.name
     }
   }
 }

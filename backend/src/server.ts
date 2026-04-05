@@ -4,6 +4,10 @@ import pinoHttp from 'pino-http';
 
 import { logger } from './logger';
 import balancesRoutes from './routes/balances';
+import choreRoutes from './routes/chore';
+import familyRoutes from './routes/family';
+import kioskRoutes from './routes/kiosk';
+import parentRoutes from './routes/parent';
 import transactionsRoutes from './routes/transactions';
 
 export const app: Application = express();
@@ -16,5 +20,11 @@ app.get('/health', (_req, res) => {
   res.status(200).json({ message: 'success' });
 });
 
-app.use('/balances', balancesRoutes);
+app.use('/chore', choreRoutes);
+app.use('/family', familyRoutes);
+app.use('/kiosk', kioskRoutes);
+app.use('/parent', parentRoutes);
+
+// Legacy routes
 app.use('/transactions', transactionsRoutes);
+app.use('/balances', balancesRoutes);

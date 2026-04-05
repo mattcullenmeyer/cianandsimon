@@ -161,6 +161,8 @@ resource "aws_lambda_function" "main" {
       FRONTEND_DOMAIN     = var.frontend_domain
       DYNAMODB_TABLE_NAME = var.default_name
       JWT_SECRET          = var.jwt_secret
+      LAMBDA_ARN          = "arn:aws:lambda:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:function:${var.default_name}"
+      SCHEDULER_ROLE_ARN  = aws_iam_role.scheduler.arn
     }
   }
 }

@@ -17,3 +17,9 @@ variable "frontend_domain" {
   type        = string
   description = "Root domain of frontend site"
 }
+
+variable "jwt_secret" {
+  type        = string
+  description = "Secret key used to sign JWTs"
+  sensitive   = true
+}

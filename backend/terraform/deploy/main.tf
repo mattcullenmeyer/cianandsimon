@@ -4,4 +4,10 @@ module "deploy" {
   domain_name      = "api.cianandsimon.xyz"
   default_name     = "cianandsimon"
   frontend_domain  = "https://cianandsimon.xyz"
+  jwt_secret       = var.jwt_secret
+}
+
+variable "jwt_secret" {
+  type      = string
+  sensitive = true
 }

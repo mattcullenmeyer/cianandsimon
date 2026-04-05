@@ -103,6 +103,7 @@ resource "aws_lambda_function" "main" {
     variables = {
       FRONTEND_DOMAIN     = var.frontend_domain
       DYNAMODB_TABLE_NAME = var.default_name
+      JWT_SECRET          = var.jwt_secret
     }
   }
 }
@@ -246,7 +247,7 @@ resource "aws_dynamodb_table" "main" {
   }
 
   ttl {
-    attribute_name = "TTL"
+    attribute_name = "ttl"
     enabled        = true
   }
 }

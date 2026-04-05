@@ -13,6 +13,12 @@ data "aws_route53_zone" "main" {
   name = var.hosted_zone_name
 }
 
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity
+data "aws_caller_identity" "current" {}
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region
+data "aws_region" "current" {}
+
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/acm_certificate_validation
 resource "aws_route53_record" "certificate_validation" {
   for_each = {
@@ -34,6 +40,10 @@ resource "aws_route53_record" "certificate_validation" {
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/acm_certificate_validation
 resource "aws_acm_certificate_validation" "main" {
   certificate_arn = aws_acm_certificate.main.arn
+}
+
+resource "aws_scheduler_schedule_group" "main" {
+  name = var.default_name
 }
 
 resource "aws_iam_role" "lambda" {
@@ -68,6 +78,16 @@ resource "aws_iam_policy" "lambda" {
         "Effect" : "Allow",
         "Action" : "dynamodb:*",
         "Resource" : aws_dynamodb_table.main.arn
+      },
+      {
+        "Effect" : "Allow",
+        "Action" : [
+          "scheduler:CreateSchedule",
+          "scheduler:UpdateSchedule",
+          "scheduler:DeleteSchedule",
+          "scheduler:GetSchedule"
+        ],
+        "Resource" : "arn:aws:scheduler:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:schedule/${aws_scheduler_schedule_group.main.name}/*"
       }
     ]
   })
@@ -76,6 +96,43 @@ resource "aws_iam_policy" "lambda" {
 resource "aws_iam_role_policy_attachment" "lambda" {
   role       = aws_iam_role.lambda.name
   policy_arn = aws_iam_policy.lambda.arn
+}
+
+resource "aws_iam_role" "scheduler" {
+  name = "${var.default_name}-scheduler-execution-role"
+
+  assume_role_policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Principal" : {
+          "Service" : "scheduler.amazonaws.com"
+        },
+        "Action" : "sts:AssumeRole"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_policy" "scheduler" {
+  name = "${var.default_name}-scheduler-execution-policy"
+
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Action" : "lambda:InvokeFunction",
+        "Resource" : aws_lambda_function.main.arn
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "scheduler" {
+  role       = aws_iam_role.scheduler.name
+  policy_arn = aws_iam_policy.scheduler.arn
 }
 
 resource "aws_cloudwatch_log_group" "lambda" {
@@ -187,7 +244,7 @@ resource "aws_api_gateway_stage" "main" {
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_permission#specify-lambda-permissions-for-api-gateway-rest-api
-resource "aws_lambda_permission" "main" {
+resource "aws_lambda_permission" "api_gateway" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.main.function_name
@@ -198,6 +255,13 @@ resource "aws_lambda_permission" "main" {
   source_arn = "${aws_api_gateway_rest_api.main.execution_arn}/*/*/*"
 }
 
+resource "aws_lambda_permission" "scheduler" {
+  statement_id  = "AllowSchedulerInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.main.function_name
+  principal     = "scheduler.amazonaws.com"
+  source_arn    = "arn:aws:scheduler:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:schedule/${aws_scheduler_schedule_group.main.name}/*"
+}
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_domain_name
 resource "aws_api_gateway_domain_name" "main" {

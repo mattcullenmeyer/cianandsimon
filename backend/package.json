@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=development DYNAMODB_TABLE_NAME=cianandsimon tsx watch --include \"./src/**/*\" src/local.ts",
-    "build": "esbuild src/lambda.ts --bundle --platform=node --target=node24 --outfile=dist/lambda.js",
-    "zip": "cd dist && zip ../terraform/resources/lambda.zip lambda.js"
+    "build": "esbuild src/lambda.ts --bundle --platform=node --target=node24 --outfile=dist/lambda.js && pnpm zip",
+    "zip": "cd dist && zip lambda.zip lambda.js && cp lambda.zip ../terraform/resources/lambda.zip",
+    "deploy": "pnpm build && AWS_DEFAULT_REGION=us-east-2 aws lambda update-function-code --function-name cianandsimon --zip-file fileb://dist/lambda.zip"
   },
   "keywords": [],
   "author": "",

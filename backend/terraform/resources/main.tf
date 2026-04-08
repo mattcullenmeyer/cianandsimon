@@ -89,6 +89,11 @@ resource "aws_iam_policy" "lambda" {
           "scheduler:GetSchedule"
         ],
         "Resource" : "arn:aws:scheduler:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:schedule/${aws_scheduler_schedule_group.main.name}/*"
+      },
+      {
+        "Effect" : "Allow",
+        "Action" : "iam:PassRole",
+        "Resource" : aws_iam_role.scheduler.arn
       }
     ]
   })
@@ -161,6 +166,7 @@ resource "aws_lambda_function" "main" {
 
   environment {
     variables = {
+      NODE_ENV            = "production"
       FRONTEND_DOMAIN     = var.frontend_domain
       DYNAMODB_TABLE_NAME = var.default_name
       JWT_SECRET          = var.jwt_secret

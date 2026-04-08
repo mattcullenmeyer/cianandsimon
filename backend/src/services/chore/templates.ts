@@ -1,7 +1,13 @@
-import { GetItemCommand, PutItemCommand, QueryCommand } from '@aws-sdk/client-dynamodb';
+import {
+  DeleteItemCommand,
+  GetItemCommand,
+  PutItemCommand,
+  QueryCommand,
+} from '@aws-sdk/client-dynamodb';
 import { randomUUID } from 'crypto';
 
 import { dynamodb } from '../../db';
+import { deleteSchedule } from './schedules';
 
 export async function createTemplate(params: {
   familyId: string;
@@ -108,6 +114,34 @@ export async function getTemplate({
       },
     }),
   };
+}
+
+export async function deleteTemplate({
+  familyId,
+  templateId,
+}: {
+  familyId: string;
+  templateId: string;
+}): Promise<boolean> {
+  const result = await dynamodb.send(
+    new DeleteItemCommand({
+      TableName: process.env.DYNAMODB_TABLE_NAME,
+      Key: {
+        PK: { S: `FAM#${familyId}` },
+        SK: { S: `TMPL#${templateId}` },
+      },
+      ConditionExpression: 'attribute_exists(PK)',
+      ReturnValues: 'ALL_OLD',
+    })
+  );
+
+  if (!result.Attributes) return false;
+
+  if (result.Attributes.recurrence_rrule && process.env.NODE_ENV === 'production') {
+    await deleteSchedule({ familyId, templateId });
+  }
+
+  return true;
 }
 
 export async function listTemplates(

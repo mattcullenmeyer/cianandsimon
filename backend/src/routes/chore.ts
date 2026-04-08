@@ -14,6 +14,7 @@ import {
 import { createSchedule } from '../services/chore/schedules';
 import {
   createTemplate,
+  deleteTemplate,
   getTemplate,
   listTemplates,
 } from '../services/chore/templates';
@@ -67,7 +68,12 @@ router.post('/template', requireFamilyAuth, async (req, res) => {
   });
 
   if (recurrence && process.env.NODE_ENV === 'production') {
-    await createSchedule({ templateId, recurrence, familyId });
+    try {
+      await createSchedule({ templateId, recurrence, familyId });
+    } catch (err) {
+      await deleteTemplate({ familyId, templateId });
+      throw err;
+    }
   }
 
   res.status(201).json({ templateId });
@@ -235,6 +241,19 @@ router.get('/templates', requireFamilyAuth, async (_req, res) => {
   const { familyId } = res.locals;
   const templates = await listTemplates(familyId);
   res.status(200).json({ templates });
+});
+
+router.delete('/template/:templateId', requireFamilyAuth, async (req, res) => {
+  const { familyId } = res.locals;
+  const { templateId } = req.params as { templateId: string };
+
+  const found = await deleteTemplate({ familyId, templateId });
+  if (!found) {
+    res.status(404).json({ error: 'Template not found' });
+    return;
+  }
+
+  res.status(204).end();
 });
 
 export default router;

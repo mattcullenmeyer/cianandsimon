@@ -4,6 +4,7 @@ import {
   TransactWriteItemsCommand,
 } from '@aws-sdk/client-dynamodb';
 import { randomUUID } from 'crypto';
+import { RRule } from 'rrule';
 
 import { dynamodb } from './db';
 
@@ -119,3 +120,49 @@ export async function createAssignment({
 
   return assignmentId;
 }
+
+interface Weekday {
+  weekday: number;
+  n: number;
+}
+
+const RRULE_TO_EB_DAY: Record<number, string> = {
+  0: 'MON',
+  1: 'TUE',
+  2: 'WED',
+  3: 'THU',
+  4: 'FRI',
+  5: 'SAT',
+  6: 'SUN',
+};
+
+export const rruleToCron = (rule: string): string => {
+  const r = RRule.fromString(rule);
+  const options = r.origOptions;
+
+  const minutes = options.byminute ?? 0;
+  const hours = options.byhour ?? 0;
+  const weekdays = options.byweekday as Weekday[];
+
+  switch (options.freq) {
+    case RRule.DAILY:
+      return `cron(${minutes} ${hours} * * ? *)`;
+
+    case RRule.WEEKLY: {
+      const days = weekdays
+        .map((day) => RRULE_TO_EB_DAY[day.weekday])
+        .join(',');
+      return `cron(${minutes} ${hours} ? * ${days} *)`;
+    }
+
+    case RRule.MONTHLY: {
+      const day = weekdays[0];
+      const dayName = RRULE_TO_EB_DAY[day.weekday];
+      const nth = day.n;
+      return `cron(${minutes} ${hours} ? * ${dayName}#${nth} *)`;
+    }
+
+    default:
+      throw new Error(`Unsupported recurrence frequency: ${options.freq}`);
+  }
+};

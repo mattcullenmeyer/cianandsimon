@@ -1,8 +1,10 @@
 import {
   CreateScheduleCommand,
+  DeleteScheduleCommand,
   SchedulerClient,
 } from '@aws-sdk/client-scheduler';
 import { SCHEDULER_EVENT_SOURCE } from '../../constants';
+import { rruleToCron } from '../../helpers';
 
 const scheduler = new SchedulerClient({});
 
@@ -15,11 +17,16 @@ export async function createSchedule({
   recurrence: { rrule: string; timezone: string };
   familyId: string;
 }): Promise<void> {
+  const cron = rruleToCron(recurrence.rrule);
+  if (!cron) {
+    throw new Error(`Unsupported RRULE: ${recurrence.rrule}`);
+  }
+
   await scheduler.send(
     new CreateScheduleCommand({
-      Name: templateId,
+      Name: `${familyId}-${templateId}`,
       GroupName: process.env.SCHEDULE_GROUP_NAME,
-      ScheduleExpression: recurrence.rrule,
+      ScheduleExpression: cron,
       ScheduleExpressionTimezone: recurrence.timezone,
       FlexibleTimeWindow: { Mode: 'OFF' },
       Target: {
@@ -32,6 +39,21 @@ export async function createSchedule({
         }),
       },
       ClientToken: templateId,
+    })
+  );
+}
+
+export async function deleteSchedule({
+  familyId,
+  templateId,
+}: {
+  familyId: string;
+  templateId: string;
+}): Promise<void> {
+  await scheduler.send(
+    new DeleteScheduleCommand({
+      Name: `${familyId}-${templateId}`,
+      GroupName: process.env.SCHEDULE_GROUP_NAME,
     })
   );
 }

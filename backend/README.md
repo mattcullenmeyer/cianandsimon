@@ -1,6 +1,35 @@
 # Backend
 
+## Development
+
 `docker compose up`
+
+## Architecture Notes
+
+### Account Model
+
+Parents and children are separate entity types. Parents register with email/password and manage the family. Children have no credentials — they interact via kiosk mode, which is scoped to their family but requires no login.
+
+### Auth Flow
+
+A parent logs in by looking up `AUTH#EMAIL#<email>` / `#METADATA`, which resolves to a `parentId` and `familyId`. This avoids a GSI. Multiple auth lookup items can point to the same parent to support linking additional providers (Google, Apple) in future.
+
+## DynamoDB Key Schema
+
+| Entity                 | PK                   | SK                                |
+| ---------------------- | -------------------- | --------------------------------- |
+| Family                 | `FAM#<familyId>`     | `#METADATA`                       |
+| Parent (family-scoped) | `FAM#<familyId>`     | `PARENT#<parentId>`               |
+| Child                  | `FAM#<familyId>`     | `CHILD#<childId>`                 |
+| Balance                | `FAM#<familyId>`     | `BALANCE#<childId>`               |
+| Chore Template         | `FAM#<familyId>`     | `TMPL#<templateId>`               |
+| Chore Assignment       | `FAM#<familyId>`     | `ASSIGN#<childId>#<assignmentId>` |
+| Chore History          | `FAM#<familyId>`     | `HIST#<childId>#<completedAt>`    |
+| Parent Account         | `PARENT#<parentId>`  | `#METADATA`                       |
+| Auth Lookup            | `AUTH#EMAIL#<email>` | `#METADATA`                       |
+| Kiosk OTP              | `OTP#<otp>`          | `#METADATA`                       |
+
+## DynamoDB Local Commands
 
 ```bash
 aws dynamodb list-tables --endpoint-url http://localhost:8000

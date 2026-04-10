@@ -200,12 +200,14 @@ export async function queryAssignmentsByStatus({
     new QueryCommand({
       TableName: process.env.DYNAMODB_TABLE_NAME,
       KeyConditionExpression: 'PK = :pk AND begins_with(SK, :prefix)',
-      FilterExpression: '#status = :status',
-      ExpressionAttributeNames: { '#status': 'status' },
+      FilterExpression:
+        '#status = :status AND (attribute_not_exists(#ttl) OR #ttl > :now)',
+      ExpressionAttributeNames: { '#status': 'status', '#ttl': 'ttl' },
       ExpressionAttributeValues: {
         ':pk': { S: `FAM#${familyId}` },
         ':prefix': { S: 'ASSIGN#' },
         ':status': { S: status },
+        ':now': { N: String(Math.floor(Date.now() / 1000)) },
       },
     })
   );

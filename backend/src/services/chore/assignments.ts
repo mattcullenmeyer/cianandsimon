@@ -162,8 +162,14 @@ export async function updateAssignmentStatus({
         PK: { S: `FAM#${familyId}` },
         SK: { S: `ASSIGN#${childId}#${assignmentId}` },
       },
-      UpdateExpression: 'SET #status = :status',
-      ExpressionAttributeNames: { '#status': 'status' },
+      UpdateExpression:
+        status === 'PENDING'
+          ? 'SET #status = :status REMOVE #ttl'
+          : 'SET #status = :status',
+      ExpressionAttributeNames: {
+        '#status': 'status',
+        ...(status === 'PENDING' && { '#ttl': 'ttl' }),
+      },
       ExpressionAttributeValues: { ':status': { S: status } },
       ConditionExpression: 'attribute_exists(PK)',
     })
@@ -188,7 +194,6 @@ export async function queryAssignmentsByStatus({
     status: string;
     assignedAt: string;
     assignedBy: string;
-    expiresAt?: string;
   }>
 > {
   const result = await dynamodb.send(
@@ -219,7 +224,6 @@ export async function queryAssignmentsByStatus({
     status: item.status.S!,
     assignedAt: item.assignedAt.S!,
     assignedBy: item.assignedBy.S!,
-    ...(item.expiresAt && { expiresAt: item.expiresAt.S! }),
   }));
 }
 

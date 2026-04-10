@@ -55,15 +55,8 @@ export async function createAssignment({
   const expirationSeconds = template.expirationSeconds?.N
     ? Number(template.expirationSeconds.N)
     : undefined;
-  const expiresAtMs = expirationSeconds
-    ? assignedAtMs + expirationSeconds * 1000
-    : undefined;
-  const expiresAt = expiresAtMs
-    ? new Date(expiresAtMs).toISOString()
-    : undefined;
-  const ONE_WEEK_SECONDS = 7 * 24 * 60 * 60;
-  const ttl = expiresAtMs
-    ? Math.floor(expiresAtMs / 1000) + ONE_WEEK_SECONDS
+  const ttl = expirationSeconds
+    ? Math.floor(assignedAtMs / 1000) + expirationSeconds
     : undefined;
 
   const subtasks = (template.subtasks.L ?? []).map((s) => ({
@@ -95,7 +88,6 @@ export async function createAssignment({
               status: { S: 'ACTIVE' },
               assignedAt: { S: assignedAt },
               assignedBy: { S: assignedBy },
-              ...(expiresAt && { expiresAt: { S: expiresAt } }),
               ...(ttl && { ttl: { N: String(ttl) } }),
             },
           },

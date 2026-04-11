@@ -14,6 +14,11 @@ Parents and children are separate entity types. Parents register with email/pass
 
 A parent logs in by looking up `AUTH#EMAIL#<email>` / `#METADATA`, which resolves to a `parentId` and `familyId`. This avoids a GSI. Multiple auth lookup items can point to the same parent to support linking additional providers (Google, Apple) in future.
 
+### Child Account Login (future)
+
+To support child logins, add a `passwordHash` to the child entity (ie `CHILD#<childId>` item) and write an `AUTH#EMAIL#<email>` lookup item that includes a `childId` field (and a `role: "child"` field to distinguish it from parent auth). The JWT would carry `childId` + `familyId` instead of `parentId` + `familyId`, and a separate middleware guard would protect child-only routes.
+
+````
 ## DynamoDB Key Schema
 
 | Entity                 | PK                   | SK                                |
@@ -63,3 +68,4 @@ aws dynamodb query \
   --expression-attribute-values '{":pk": {"S": "NAME#Cian"}, ":sk": {"S": "TRANSACTION#"}}' \
   --scan-index-forward false
 ```
+````

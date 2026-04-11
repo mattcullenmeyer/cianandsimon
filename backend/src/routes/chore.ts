@@ -18,7 +18,7 @@ import {
   getTemplate,
   listTemplates,
 } from '../services/chore/templates';
-import { handleSchedulerEvent } from '../scheduler_handler';
+import { handleSchedulerEvent } from '../scheduler-handler';
 
 const router: Router = Router();
 

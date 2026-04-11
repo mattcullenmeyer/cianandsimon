@@ -1,7 +1,7 @@
 import type { APIGatewayProxyEvent, Context } from 'aws-lambda';
 import serverless from '@codegenie/serverless-express';
 import { app } from './server';
-import { handleSchedulerEvent } from './scheduler_handler';
+import { handleSchedulerEvent } from './scheduler-handler';
 import { SCHEDULER_EVENT_SOURCE } from './constants';
 
 const serverlessHandler = serverless({ app, resolutionMode: 'PROMISE' });

@@ -1,11 +1,11 @@
-import { defineSlotRecipe } from '@pandacss/dev'
+import { defineSlotRecipe } from '@pandacss/dev';
 
 export const card = defineSlotRecipe({
   className: 'card',
   slots: ['root', 'header', 'body', 'footer', 'title', 'description'],
   base: {
     root: {
-      borderRadius: 'l3',
+      borderRadius: 'md',
       display: 'flex',
       flexDirection: 'column',
       overflow: 'hidden',
@@ -48,21 +48,21 @@ export const card = defineSlotRecipe({
     variant: {
       elevated: {
         root: {
-          bg: 'gray.surface.bg',
+          bg: 'bg.surface',
           boxShadow: 'lg',
         },
       },
       outline: {
         root: {
-          bg: 'gray.surface.bg',
+          bg: 'bg.surface',
           borderWidth: '1px',
         },
       },
       subtle: {
         root: {
-          bg: 'gray.subtle.bg',
+          bg: 'bg.subtle',
         },
       },
     },
   },
-})
+});

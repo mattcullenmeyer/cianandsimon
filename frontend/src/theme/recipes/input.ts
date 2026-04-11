@@ -1,11 +1,11 @@
-import type { RecipeConfig } from '@pandacss/dev'
+import type { RecipeConfig } from '@pandacss/dev';
 
 export const input = {
   className: 'input',
   jsx: ['Input', 'Field.Input'],
   base: {
     appearance: 'none',
-    borderRadius: 'l2',
+    borderRadius: 'sm',
     height: 'var(--input-height)',
     minHeight: 'var(--input-height)',
     minW: 'var(--input-height)',
@@ -26,7 +26,7 @@ export const input = {
     variant: {
       outline: {
         borderWidth: '1px',
-        borderColor: 'gray.outline.border',
+        borderColor: 'border',
         focusVisibleRing: 'inside',
         _invalid: {
           focusRingColor: 'error',
@@ -34,11 +34,10 @@ export const input = {
         },
       },
       surface: {
-        bg: 'gray.surface.bg',
+        bg: 'bg.surface',
         borderWidth: '1px',
-        borderColor: 'gray.surface.border',
+        borderColor: 'border',
         focusVisibleRing: 'inside',
-
         _invalid: {
           focusRingColor: 'error',
           borderColor: 'error',
@@ -47,10 +46,9 @@ export const input = {
       subtle: {
         borderWidth: '1px',
         borderColor: 'transparent',
-        bg: 'gray.subtle.bg',
-        color: 'gray.subtle.fg',
+        bg: 'bg.subtle',
+        color: 'fg.subtle',
         focusVisibleRing: 'inside',
-
         _invalid: {
           focusRingColor: 'error',
           borderColor: 'error',
@@ -58,16 +56,16 @@ export const input = {
       },
       flushed: {
         borderBottomWidth: '1px',
-        borderBottomColor: 'gray.outline.border',
+        borderBottomColor: 'border',
         borderRadius: '0',
-        color: 'fg.default',
+        color: 'fg',
         px: '0',
         _invalid: {
           borderColor: 'error',
         },
         _focus: {
-          borderColor: 'colorPalette.solid.bg',
-          boxShadowColor: 'colorPalette.solid.bg',
+          borderColor: 'accent',
+          boxShadowColor: 'accent',
           boxShadow: '0 1px 0 0 var(--shadow-color)',
           _invalid: {
             borderColor: 'error',
@@ -86,4 +84,4 @@ export const input = {
       '2xl': { textStyle: '3xl', px: '4.5', '--input-height': 'sizes.16' },
     },
   },
-} satisfies RecipeConfig
+} satisfies RecipeConfig;

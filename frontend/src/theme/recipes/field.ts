@@ -23,7 +23,7 @@ export const field = defineSlotRecipe({
       },
     },
     requiredIndicator: {
-      color: 'colorPalette.solid',
+      color: 'accent',
     },
     helperText: {
       color: 'fg.muted',

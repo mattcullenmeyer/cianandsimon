@@ -1,4 +1,4 @@
-import { defineRecipe } from '@pandacss/dev'
+import { defineRecipe } from '@pandacss/dev';
 
 export const skeleton = defineRecipe({
   className: 'skeleton',
@@ -7,7 +7,7 @@ export const skeleton = defineRecipe({
   variants: {
     loading: {
       true: {
-        borderRadius: 'l2',
+        borderRadius: 'sm',
         boxShadow: 'none',
         backgroundClip: 'padding-box',
         cursor: 'default',
@@ -31,21 +31,21 @@ export const skeleton = defineRecipe({
         alignItems: 'center',
         justifyContent: 'center',
         flex: '0 0 auto',
-        borderRadius: '9999px',
+        borderRadius: 'full',
       },
     },
 
     variant: {
       pulse: {
-        background: 'gray.subtle.bg.active',
+        background: 'bg.muted',
         animation: 'pulse',
         animationDuration: 'var(--duration, 1.2s)',
       },
       shine: {
         '--animate-from': '200%',
         '--animate-to': '-200%',
-        '--start-color': 'colors.gray.subtle.bg',
-        '--end-color': 'colors.gray.subtle.bg.active',
+        '--start-color': 'colors.bg.subtle',
+        '--end-color': 'colors.bg.muted',
         backgroundImage:
           'linear-gradient(270deg,var(--start-color),var(--end-color),var(--end-color),var(--start-color))',
         backgroundSize: '400% 100%',
@@ -61,4 +61,4 @@ export const skeleton = defineRecipe({
     variant: 'pulse',
     loading: true,
   },
-})
+});

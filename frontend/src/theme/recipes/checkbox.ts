@@ -24,7 +24,7 @@ export const checkbox = defineSlotRecipe({
       flexShrink: '0',
       borderWidth: '1px', // 1px
       borderColor: 'transparent',
-      borderRadius: 'l1',
+      borderRadius: 'xs',
       cursor: 'pointer',
       focusVisibleRing: 'outside',
 
@@ -61,11 +61,11 @@ export const checkbox = defineSlotRecipe({
       solid: {
         control: {
           control: {
-            borderColor: 'fg.default', // border
+            borderColor: 'border',
             _checked: {
-              bg: 'colorPalette.solid.bg',
-              borderColor: 'colorPalette.solid.bg',
-              color: 'colorPalette.solid.fg',
+              bg: 'accent',
+              borderColor: 'accent',
+              color: 'fg.inverted',
             },
             _invalid: {
               background: 'error',
@@ -75,31 +75,31 @@ export const checkbox = defineSlotRecipe({
       },
       surface: {
         control: {
-          bg: 'colorPalette.surface.bg',
+          bg: 'bg.surface',
           borderWidth: '1px',
-          borderColor: 'colorPalette.surface.border',
-          color: 'colorPalette.surface.fg',
+          borderColor: 'border',
+          color: 'fg',
         },
       },
       subtle: {
         control: {
-          bg: 'colorPalette.subtle.bg',
-          color: 'colorPalette.subtle.fg',
+          bg: 'bg.subtle',
+          color: 'fg.subtle',
         },
       },
       outline: {
         control: {
           borderWidth: '1px',
-          borderColor: 'colorPalette.outline.border',
-          color: 'colorPalette.outline.fg',
+          borderColor: 'border',
+          color: 'fg',
           _checked: {
-            borderColor: 'colorPalette.solid.bg',
+            borderColor: 'accent',
           },
         },
       },
       plain: {
         control: {
-          color: 'colorPalette.plain.fg',
+          color: 'fg',
         },
       },
     },

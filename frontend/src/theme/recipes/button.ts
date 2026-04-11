@@ -6,7 +6,7 @@ export const button = defineRecipe({
   base: {
     alignItems: 'center',
     appearance: 'none',
-    borderRadius: 'l2',
+    borderRadius: 'sm',
     cursor: 'pointer',
     display: 'inline-flex',
     flexShrink: '0',
@@ -36,66 +36,48 @@ export const button = defineRecipe({
   variants: {
     variant: {
       solid: {
-        bg: 'colorPalette.solid.bg',
-        color: 'colorPalette.solid.fg',
+        bg: 'accent',
+        color: 'fg.inverted',
         _hover: {
-          bg: 'colorPalette.solid.bg.hover',
+          bg: 'accent.emphasis',
         },
       },
       surface: {
-        bg: 'colorPalette.surface.bg',
+        bg: 'bg.surface',
         borderWidth: '1px',
-        borderColor: 'colorPalette.surface.border',
-        color: 'colorPalette.surface.fg',
+        borderColor: 'border',
+        color: 'fg',
         _hover: {
-          borderColor: 'colorPalette.surface.border.hover',
+          borderColor: 'border',
         },
         _active: {
-          bg: 'colorPalette.surface.bg.active',
+          bg: 'bg.muted',
         },
         _on: {
-          bg: 'colorPalette.surface.bg.active',
+          bg: 'bg.muted',
         },
       },
       subtle: {
-        bg: 'colorPalette.subtle.bg',
-        color: 'colorPalette.subtle.fg',
+        bg: 'bg.subtle',
+        color: 'fg.subtle',
         _hover: {
-          bg: 'colorPalette.subtle.bg.hover',
+          bg: 'bg.muted',
         },
         _active: {
-          bg: 'colorPalette.subtle.bg.active',
+          bg: 'bg.muted',
         },
         _on: {
-          bg: 'colorPalette.subtle.bg.active',
+          bg: 'bg.muted',
         },
       },
       outline: {
         borderWidth: '1px',
-        borderColor: 'colorPalette.outline.border',
-        color: 'colorPalette.outline.fg',
+        borderColor: 'border',
+        color: 'fg',
         bg: 'white',
-        // _hover: {
-        //   bg: 'colorPalette.outline.bg.hover',
-        // },
-        // _active: {
-        //   bg: 'colorPalette.outline.bg.active',
-        // },
-        // _on: {
-        //   bg: 'colorPalette.outline.bg.active',
-        // },
       },
       plain: {
-        color: 'colorPalette.plain.fg',
-        // _hover: {
-        //   bg: 'colorPalette.plain.bg.hover',
-        // },
-        // _active: {
-        //   bg: 'colorPalette.plain.bg.active',
-        // },
-        // _on: {
-        //   bg: 'colorPalette.plain.bg.active',
-        // },
+        color: 'fg',
       },
     },
     size: {

@@ -36,7 +36,7 @@ export const ToDoButton = ({
       listStyle="none"
       borderRadius="l2"
       borderWidth="1px"
-      borderColor="colorPalette.outline.border"
+      borderColor="border"
       paddingX="4"
       paddingY="2"
       fontWeight="medium"
@@ -67,7 +67,7 @@ export const ToDoButton = ({
             </Checkbox.Control>
             <Checkbox.Label
               textDecoration={isChecked ? 'line-through' : 'none'}
-              color={isChecked ? 'fg.subtle' : 'fg.default'}
+              color={isChecked ? 'fg.subtle' : 'fg'}
               fontSize="sm"
               cursor={hasChecklist ? 'pointer' : 'default'}
             >
@@ -116,7 +116,7 @@ export const ToDoButton = ({
                 </Checkbox.Control>
                 <Checkbox.Label
                   textDecoration={item.checked ? 'line-through' : 'none'}
-                  color={item.checked ? 'fg.subtle' : 'fg.default'}
+                  color={item.checked ? 'fg.subtle' : 'fg'}
                   fontWeight="normal"
                 >
                   {item.label}

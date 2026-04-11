@@ -49,13 +49,13 @@ export const radioGroup = defineSlotRecipe({
       solid: {
         itemControl: {
           boxShadow: 'inset 0 0 0 1px var(--shadow-color)',
-          boxShadowColor: 'gray.surface.border',
+          boxShadowColor: 'border',
           _checked: {
-            bg: 'colorPalette.solid.bg',
-            color: 'colorPalette.solid.fg',
-            boxShadowColor: 'colorPalette.solid.bg',
+            bg: 'accent',
+            color: 'fg.inverted',
+            boxShadowColor: 'accent',
             _after: {
-              background: 'colorPalette.solid.fg',
+              background: 'fg.inverted',
             },
           },
         },

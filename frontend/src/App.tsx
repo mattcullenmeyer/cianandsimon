@@ -28,7 +28,7 @@ function App() {
         paddingY="4"
         bg="white"
         borderTop="1px solid"
-        borderColor="colorPalette.outline.border"
+        borderColor="border"
         display="flex"
         justifyContent="space-around"
       >

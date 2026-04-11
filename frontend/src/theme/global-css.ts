@@ -5,15 +5,12 @@ export const globalCss = defineGlobalStyles({
     '*': {
       '--global-color-border': 'colors.border',
       '--global-color-placeholder': 'colors.fg.subtle',
-      '--global-color-selection': 'colors.colorPalette.subtle.bg',
-      '--global-color-focus-ring': 'colors.colorPalette.solid.bg',
-    },
-    html: {
-      colorPalette: 'gray',
+      '--global-color-selection': 'colors.accent.subtle',
+      '--global-color-focus-ring': 'colors.accent',
     },
     body: {
-      background: 'canvas',
-      color: 'fg.default',
+      background: 'bg',
+      color: 'fg',
     },
   },
 });

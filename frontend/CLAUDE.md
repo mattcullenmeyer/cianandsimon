@@ -49,10 +49,7 @@ export const Item = withContext(Timer.Item, 'item');
 
 ### Semantic Tokens
 
-Use semantic tokens for colors instead of raw values:
-- `fg.default`, `fg.muted`, `fg.subtle` - Foreground/text colors
-- `colorPalette.solid.bg`, `colorPalette.subtle.fg` - Component color palette tokens
-- `border` - Border color
+Use semantic tokens for colors instead of raw values. Do not use `colorPalette.*` tokens or raw color values (e.g. `gray.surface.bg`) in components or recipes. See `src/theme/semantic-tokens/index.ts` for the full list of available tokens.
 
 ### Typography
 

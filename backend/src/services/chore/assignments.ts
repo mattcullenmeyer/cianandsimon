@@ -32,6 +32,12 @@ export async function createAssignmentFromTemplate({
 
   if (!result.Item) return null;
 
+  const existingAssignments = result.Item.assignments?.L ?? [];
+  const alreadyAssigned = existingAssignments.some(
+    (a) => a.M?.childId?.S === childId
+  );
+  if (alreadyAssigned) return null;
+
   return createAssignment({
     template: result.Item,
     childId,
@@ -96,6 +102,21 @@ export async function completeAssignment({
   const value = Number(item.value.N!);
   const completedAt = new Date().toISOString();
 
+  const templateResult = await dynamodb.send(
+    new GetItemCommand({
+      TableName: process.env.DYNAMODB_TABLE_NAME,
+      Key: {
+        PK: { S: `FAM#${familyId}` },
+        SK: { S: `TMPL#${item.templateId.S!}` },
+      },
+    })
+  );
+
+  const templateAssignments = templateResult.Item?.assignments?.L ?? [];
+  const assignmentIndex = templateAssignments.findIndex(
+    (a) => a.M?.assignmentId?.S === assignmentId
+  );
+
   await dynamodb.send(
     new TransactWriteItemsCommand({
       TransactItems: [
@@ -136,6 +157,21 @@ export async function completeAssignment({
             },
           },
         },
+        ...(assignmentIndex >= 0
+          ? [
+              {
+                Update: {
+                  TableName: process.env.DYNAMODB_TABLE_NAME!,
+                  Key: {
+                    PK: { S: `FAM#${familyId}` },
+                    SK: { S: `TMPL#${item.templateId.S!}` },
+                  },
+                  UpdateExpression: `REMOVE assignments[${assignmentIndex}]`,
+                  ConditionExpression: 'attribute_exists(PK)',
+                },
+              },
+            ]
+          : []),
       ],
     })
   );

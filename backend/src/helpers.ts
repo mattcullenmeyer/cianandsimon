@@ -102,7 +102,16 @@ export async function createAssignment({
             UpdateExpression:
               'SET assignments = list_append(assignments, :newAssignment)',
             ExpressionAttributeValues: {
-              ':newAssignment': { L: [{ S: assignmentId }] },
+              ':newAssignment': {
+                L: [
+                  {
+                    M: {
+                      assignmentId: { S: assignmentId },
+                      childId: { S: childId },
+                    },
+                  },
+                ],
+              },
             },
           },
         },

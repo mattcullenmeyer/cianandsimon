@@ -34,7 +34,7 @@ export const ToDoButton = ({
     <Box
       as="li"
       listStyle="none"
-      borderRadius="l2"
+      borderRadius="sm"
       borderWidth="1px"
       borderColor="border"
       paddingX="4"

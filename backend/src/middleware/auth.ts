@@ -6,13 +6,11 @@ export function requireKioskAuth(
   res: Response,
   next: NextFunction
 ): void {
-  const authHeader = req.headers.authorization;
-  if (!authHeader?.startsWith('Bearer ')) {
+  const token = req.cookies?.auth;
+  if (!token) {
     res.status(401).json({ error: 'Unauthorized' });
     return;
   }
-
-  const token = authHeader.slice(7);
 
   try {
     const payload = verify(token, process.env.JWT_SECRET!) as {
@@ -34,13 +32,11 @@ export function requireParentAuth(
   res: Response,
   next: NextFunction
 ): void {
-  const authHeader = req.headers.authorization;
-  if (!authHeader?.startsWith('Bearer ')) {
+  const token = req.cookies?.auth;
+  if (!token) {
     res.status(401).json({ error: 'Unauthorized' });
     return;
   }
-
-  const token = authHeader.slice(7);
 
   try {
     const payload = verify(token, process.env.JWT_SECRET!) as {
@@ -58,13 +54,11 @@ export function requireFamilyAuth(
   res: Response,
   next: NextFunction
 ): void {
-  const authHeader = req.headers.authorization;
-  if (!authHeader?.startsWith('Bearer ')) {
+  const token = req.cookies?.auth;
+  if (!token) {
     res.status(401).json({ error: 'Unauthorized' });
     return;
   }
-
-  const token = authHeader.slice(7);
 
   try {
     const payload = verify(token, process.env.JWT_SECRET!) as {

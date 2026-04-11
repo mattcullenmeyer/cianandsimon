@@ -1,3 +1,4 @@
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { Application } from 'express';
 import pinoHttp from 'pino-http';
@@ -12,7 +13,8 @@ import transactionsRoutes from './routes/transactions';
 
 export const app: Application = express();
 
-app.use(cors({ origin: process.env.FRONTEND_DOMAIN }));
+app.use(cors({ origin: process.env.FRONTEND_DOMAIN, credentials: true }));
+app.use(cookieParser());
 app.use(express.json());
 app.use(pinoHttp({ logger }));
 

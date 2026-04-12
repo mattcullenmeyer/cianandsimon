@@ -76,7 +76,7 @@ router.post('/verify-email', async (req, res) => {
     return;
   }
 
-  res.status(200).json({});
+  res.status(204).end();
 });
 
 const selectFamilySchema = z.object({
@@ -105,7 +105,7 @@ router.post('/select-family', requireParentAuth, async (req, res) => {
     sameSite: 'strict',
     maxAge: TOKEN_EXPIRY_SECONDS * 1000,
   });
-  res.status(200).json({});
+  res.status(204).end();
 });
 
 export default router;

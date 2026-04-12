@@ -22,11 +22,15 @@ export const LoginPage = () => {
       const body: LoginResponse = await response.json();
 
       if ('families' in body) {
-        // Multiple families — user needs to select one
-        navigate({ to: '/' }); // TODO: navigate to family selection page
+        // Multiple families
+        sessionStorage.setItem(
+          'selectFamilyOptions',
+          JSON.stringify(body.families)
+        );
+        navigate({ to: '/select-family' });
       } else if ('familyId' in body) {
-        // Single family — already scoped
-        navigate({ to: '/' }); // TODO: change to dashboard
+        // Single family
+        navigate({ to: '/home' });
       } else {
         // No families yet
         navigate({ to: '/create-family' });

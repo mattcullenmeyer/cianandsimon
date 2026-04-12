@@ -11,7 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as SelectFamilyRouteImport } from './routes/select-family'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as KioskRouteImport } from './routes/kiosk'
 import { Route as CreateFamilyRouteImport } from './routes/create-family'
 import { Route as HomeRouteImport } from './routes/_home'
 import { Route as IndexRouteImport } from './routes/index'
@@ -29,9 +31,19 @@ const SignupRoute = SignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SelectFamilyRoute = SelectFamilyRouteImport.update({
+  id: '/select-family',
+  path: '/select-family',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KioskRoute = KioskRouteImport.update({
+  id: '/kiosk',
+  path: '/kiosk',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CreateFamilyRoute = CreateFamilyRouteImport.update({
@@ -67,7 +79,9 @@ const HomeChoresRoute = HomeChoresRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/create-family': typeof CreateFamilyRoute
+  '/kiosk': typeof KioskRoute
   '/login': typeof LoginRoute
+  '/select-family': typeof SelectFamilyRoute
   '/signup': typeof SignupRoute
   '/verify-email': typeof VerifyEmailRoute
   '/chores': typeof HomeChoresRoute
@@ -77,7 +91,9 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/create-family': typeof CreateFamilyRoute
+  '/kiosk': typeof KioskRoute
   '/login': typeof LoginRoute
+  '/select-family': typeof SelectFamilyRoute
   '/signup': typeof SignupRoute
   '/verify-email': typeof VerifyEmailRoute
   '/chores': typeof HomeChoresRoute
@@ -89,7 +105,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_home': typeof HomeRouteWithChildren
   '/create-family': typeof CreateFamilyRoute
+  '/kiosk': typeof KioskRoute
   '/login': typeof LoginRoute
+  '/select-family': typeof SelectFamilyRoute
   '/signup': typeof SignupRoute
   '/verify-email': typeof VerifyEmailRoute
   '/_home/chores': typeof HomeChoresRoute
@@ -101,7 +119,9 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/create-family'
+    | '/kiosk'
     | '/login'
+    | '/select-family'
     | '/signup'
     | '/verify-email'
     | '/chores'
@@ -111,7 +131,9 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/create-family'
+    | '/kiosk'
     | '/login'
+    | '/select-family'
     | '/signup'
     | '/verify-email'
     | '/chores'
@@ -122,7 +144,9 @@ export interface FileRouteTypes {
     | '/'
     | '/_home'
     | '/create-family'
+    | '/kiosk'
     | '/login'
+    | '/select-family'
     | '/signup'
     | '/verify-email'
     | '/_home/chores'
@@ -134,7 +158,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HomeRoute: typeof HomeRouteWithChildren
   CreateFamilyRoute: typeof CreateFamilyRoute
+  KioskRoute: typeof KioskRoute
   LoginRoute: typeof LoginRoute
+  SelectFamilyRoute: typeof SelectFamilyRoute
   SignupRoute: typeof SignupRoute
   VerifyEmailRoute: typeof VerifyEmailRoute
 }
@@ -155,11 +181,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/select-family': {
+      id: '/select-family'
+      path: '/select-family'
+      fullPath: '/select-family'
+      preLoaderRoute: typeof SelectFamilyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kiosk': {
+      id: '/kiosk'
+      path: '/kiosk'
+      fullPath: '/kiosk'
+      preLoaderRoute: typeof KioskRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/create-family': {
@@ -225,7 +265,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HomeRoute: HomeRouteWithChildren,
   CreateFamilyRoute: CreateFamilyRoute,
+  KioskRoute: KioskRoute,
   LoginRoute: LoginRoute,
+  SelectFamilyRoute: SelectFamilyRoute,
   SignupRoute: SignupRoute,
   VerifyEmailRoute: VerifyEmailRoute,
 }

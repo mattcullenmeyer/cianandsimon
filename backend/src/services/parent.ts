@@ -7,6 +7,7 @@ import { randomBytes, randomUUID, scrypt, timingSafeEqual } from 'crypto';
 import { sign } from 'jsonwebtoken';
 import { promisify } from 'util';
 
+import { TOKEN_EXPIRY_SECONDS } from '../constants';
 import { dynamodb } from '../db';
 
 const scryptAsync = promisify(scrypt);
@@ -70,6 +71,7 @@ export async function signupParent({
 }
 
 type LoginResult =
+  | { token: string }
   | { token: string; familyId: string }
   | { token: string; families: Array<{ familyId: string; name: string }> };
 
@@ -122,13 +124,17 @@ export async function loginParent({
   const familyIds = parentAccount.Item.familyIds?.SS ?? [];
 
   if (familyIds.length === 0) {
-    const token = sign({ parentId }, process.env.JWT_SECRET!, { expiresIn: '7d' });
-    return { token, families: [] };
+    const token = sign({ parentId }, process.env.JWT_SECRET!, {
+      expiresIn: TOKEN_EXPIRY_SECONDS,
+    });
+    return { token };
   }
 
   if (familyIds.length === 1) {
     const familyId = familyIds[0];
-    const token = sign({ parentId, familyId }, process.env.JWT_SECRET!, { expiresIn: '7d' });
+    const token = sign({ parentId, familyId }, process.env.JWT_SECRET!, {
+      expiresIn: TOKEN_EXPIRY_SECONDS,
+    });
     return { token, familyId };
   }
 
@@ -152,7 +158,9 @@ export async function loginParent({
     name: item.name.S!,
   }));
 
-  const token = sign({ parentId }, process.env.JWT_SECRET!, { expiresIn: '7d' });
+  const token = sign({ parentId }, process.env.JWT_SECRET!, {
+    expiresIn: TOKEN_EXPIRY_SECONDS,
+  });
   return { token, families };
 }
 
@@ -176,5 +184,7 @@ export async function selectFamily({
   const familyIds = parentAccount.Item?.familyIds?.SS ?? [];
   if (!familyIds.includes(familyId)) return null;
 
-  return sign({ parentId, familyId }, process.env.JWT_SECRET!, { expiresIn: '7d' });
+  return sign({ parentId, familyId }, process.env.JWT_SECRET!, {
+    expiresIn: TOKEN_EXPIRY_SECONDS,
+  });
 }

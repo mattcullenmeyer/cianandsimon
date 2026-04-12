@@ -6,4 +6,5 @@
 
 # TODO
 
+- [ ] Refresh JWT
 - [ ] Parent's dashboard should include outstanding chores (all chores due with completion status), pending verifications (chores waiting for parental approval), chores (set up chores and associated point values), kids (adding/configuring kids)

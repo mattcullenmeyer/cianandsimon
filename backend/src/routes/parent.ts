@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { z } from 'zod';
 
+import { TOKEN_EXPIRY_SECONDS } from '../constants';
 import { requireParentAuth } from '../middleware/auth';
 import { loginParent, selectFamily, signupParent } from '../services/parent';
 
@@ -52,7 +53,7 @@ router.post('/login', async (req, res) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
-    maxAge: 7 * 24 * 60 * 60 * 1000,
+    maxAge: TOKEN_EXPIRY_SECONDS * 1000,
   });
   res.status(200).json(rest);
 });
@@ -102,7 +103,7 @@ router.post('/select-family', requireParentAuth, async (req, res) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
-    maxAge: 7 * 24 * 60 * 60 * 1000,
+    maxAge: TOKEN_EXPIRY_SECONDS * 1000,
   });
   res.status(200).json({});
 });

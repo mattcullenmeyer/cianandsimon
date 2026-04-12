@@ -33,7 +33,7 @@ export const AuthCard = ({
   };
 
   return (
-    <Box display="flex" justifyContent="center" mt="16">
+    <Box display="flex" justifyContent="center" mt="16" px="3">
       <Card.Root width="sm">
         <Card.Header>
           <Card.Title textStyle="2xl">{title}</Card.Title>

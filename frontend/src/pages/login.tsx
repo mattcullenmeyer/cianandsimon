@@ -1,4 +1,9 @@
 import { useNavigate } from '@tanstack/react-router';
+
+type LoginResponse =
+  | Record<string, never>
+  | { familyId: string }
+  | { families: Array<{ familyId: string; name: string }> };
 import { AuthCard } from '@/components/auth-card';
 import { config } from '@/config';
 
@@ -14,7 +19,18 @@ export const LoginPage = () => {
     });
 
     if (response.status === 200) {
-      navigate({ to: '/' }); // TODO: change to dashboard
+      const body: LoginResponse = await response.json();
+
+      if ('families' in body) {
+        // Multiple families — user needs to select one
+        navigate({ to: '/' }); // TODO: navigate to family selection page
+      } else if ('familyId' in body) {
+        // Single family — already scoped
+        navigate({ to: '/' }); // TODO: change to dashboard
+      } else {
+        // No families yet
+        navigate({ to: '/create-family' });
+      }
     } else {
       throw new Error('Login failed. Please try again.');
     }

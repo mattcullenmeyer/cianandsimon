@@ -12,6 +12,7 @@ export * as Field from "./field";
 export { Group, type GroupProps } from './group';
 export { Input, type InputProps } from "./input";
 export { Loader, type LoaderProps } from './loader';
+export * as PinInput from "./pin-input";
 export * as RadioGroup from "./radio-group";
 export { Skeleton, SkeletonCircle, SkeletonText, type SkeletonCircleProps, type SkeletonProps, type SkeletonTextProps } from "./skeleton";
 export { Span, type SpanProps } from './span';

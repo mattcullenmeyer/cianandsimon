@@ -1,3 +1,4 @@
+import { pinInput } from "./pin-input";
 import { table } from "./table";
 import { radioGroup } from "./radio-group";
 import { field } from "./field";
@@ -22,7 +23,8 @@ export const recipes = {
   input,
   field,
   radioGroup,
-  table
+  table,
+  pinInput
 };
 export const slotRecipes = {
   card,

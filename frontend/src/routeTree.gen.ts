@@ -9,10 +9,21 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as CreateFamilyRouteImport } from './routes/create-family'
+import { Route as HomeRouteImport } from './routes/_home'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as HomeSettingsRouteImport } from './routes/_home/settings'
+import { Route as HomeHomeRouteImport } from './routes/_home/home'
+import { Route as HomeChoresRouteImport } from './routes/_home/chores'
 
+const VerifyEmailRoute = VerifyEmailRouteImport.update({
+  id: '/verify-email',
+  path: '/verify-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
@@ -23,44 +34,120 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CreateFamilyRoute = CreateFamilyRouteImport.update({
+  id: '/create-family',
+  path: '/create-family',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HomeRoute = HomeRouteImport.update({
+  id: '/_home',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HomeSettingsRoute = HomeSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => HomeRoute,
+} as any)
+const HomeHomeRoute = HomeHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => HomeRoute,
+} as any)
+const HomeChoresRoute = HomeChoresRouteImport.update({
+  id: '/chores',
+  path: '/chores',
+  getParentRoute: () => HomeRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/create-family': typeof CreateFamilyRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/verify-email': typeof VerifyEmailRoute
+  '/chores': typeof HomeChoresRoute
+  '/home': typeof HomeHomeRoute
+  '/settings': typeof HomeSettingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/create-family': typeof CreateFamilyRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/verify-email': typeof VerifyEmailRoute
+  '/chores': typeof HomeChoresRoute
+  '/home': typeof HomeHomeRoute
+  '/settings': typeof HomeSettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_home': typeof HomeRouteWithChildren
+  '/create-family': typeof CreateFamilyRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/verify-email': typeof VerifyEmailRoute
+  '/_home/chores': typeof HomeChoresRoute
+  '/_home/home': typeof HomeHomeRoute
+  '/_home/settings': typeof HomeSettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/signup'
+  fullPaths:
+    | '/'
+    | '/create-family'
+    | '/login'
+    | '/signup'
+    | '/verify-email'
+    | '/chores'
+    | '/home'
+    | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/signup'
-  id: '__root__' | '/' | '/login' | '/signup'
+  to:
+    | '/'
+    | '/create-family'
+    | '/login'
+    | '/signup'
+    | '/verify-email'
+    | '/chores'
+    | '/home'
+    | '/settings'
+  id:
+    | '__root__'
+    | '/'
+    | '/_home'
+    | '/create-family'
+    | '/login'
+    | '/signup'
+    | '/verify-email'
+    | '/_home/chores'
+    | '/_home/home'
+    | '/_home/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  HomeRoute: typeof HomeRouteWithChildren
+  CreateFamilyRoute: typeof CreateFamilyRoute
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
+  VerifyEmailRoute: typeof VerifyEmailRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/verify-email': {
+      id: '/verify-email'
+      path: '/verify-email'
+      fullPath: '/verify-email'
+      preLoaderRoute: typeof VerifyEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/signup': {
       id: '/signup'
       path: '/signup'
@@ -75,6 +162,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/create-family': {
+      id: '/create-family'
+      path: '/create-family'
+      fullPath: '/create-family'
+      preLoaderRoute: typeof CreateFamilyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_home': {
+      id: '/_home'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -82,13 +183,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_home/settings': {
+      id: '/_home/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof HomeSettingsRouteImport
+      parentRoute: typeof HomeRoute
+    }
+    '/_home/home': {
+      id: '/_home/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeHomeRouteImport
+      parentRoute: typeof HomeRoute
+    }
+    '/_home/chores': {
+      id: '/_home/chores'
+      path: '/chores'
+      fullPath: '/chores'
+      preLoaderRoute: typeof HomeChoresRouteImport
+      parentRoute: typeof HomeRoute
+    }
   }
 }
 
+interface HomeRouteChildren {
+  HomeChoresRoute: typeof HomeChoresRoute
+  HomeHomeRoute: typeof HomeHomeRoute
+  HomeSettingsRoute: typeof HomeSettingsRoute
+}
+
+const HomeRouteChildren: HomeRouteChildren = {
+  HomeChoresRoute: HomeChoresRoute,
+  HomeHomeRoute: HomeHomeRoute,
+  HomeSettingsRoute: HomeSettingsRoute,
+}
+
+const HomeRouteWithChildren = HomeRoute._addFileChildren(HomeRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  HomeRoute: HomeRouteWithChildren,
+  CreateFamilyRoute: CreateFamilyRoute,
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
+  VerifyEmailRoute: VerifyEmailRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

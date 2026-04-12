@@ -13,7 +13,7 @@ export const SignupPage = () => {
     });
 
     if (response.status === 201) {
-      navigate({ to: '/login' });
+      navigate({ to: '/verify-email', search: { email } });
     } else {
       throw new Error('Signup failed. Please try again.');
     }

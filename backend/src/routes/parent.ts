@@ -57,6 +57,27 @@ router.post('/login', async (req, res) => {
   res.status(200).json(rest);
 });
 
+const verifyEmailSchema = z.object({
+  email: z.email(),
+  pin: z.string().length(6),
+});
+
+router.post('/verify-email', async (req, res) => {
+  const result = verifyEmailSchema.safeParse(req.body);
+  if (!result.success) {
+    res.status(400).json({ errors: result.error.issues });
+    return;
+  }
+
+  const { pin } = result.data;
+  if (pin !== 'ABC123') {
+    res.status(400).json({ error: 'Invalid or expired code' });
+    return;
+  }
+
+  res.status(200).json({});
+});
+
 const selectFamilySchema = z.object({
   familyId: z.string().min(1),
 });

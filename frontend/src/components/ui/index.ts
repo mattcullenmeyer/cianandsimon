@@ -1,5 +1,6 @@
 export { Box } from 'styled-system/jsx';
 export { AbsoluteCenter, type AbsoluteCenterProps } from './absolute-center';
+export * as Avatar from "./avatar";
 export {
     Button,
     ButtonGroup,

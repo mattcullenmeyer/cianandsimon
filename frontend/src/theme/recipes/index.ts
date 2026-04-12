@@ -1,11 +1,13 @@
-import { avatar } from "./avatar";
-import { pinInput } from "./pin-input";
-import { table } from "./table";
-import { radioGroup } from "./radio-group";
-import { field } from "./field";
-import { input } from "./input";
-import { skeleton } from "./skeleton";
-import { checkbox } from "./checkbox";
+import { menu } from './menu';
+import { tabs } from './tabs';
+import { avatar } from './avatar';
+import { pinInput } from './pin-input';
+import { table } from './table';
+import { radioGroup } from './radio-group';
+import { field } from './field';
+import { input } from './input';
+import { skeleton } from './skeleton';
+import { checkbox } from './checkbox';
 import { text } from './text';
 import { card } from './card';
 import { spinner } from './spinner';
@@ -26,7 +28,9 @@ export const recipes = {
   radioGroup,
   table,
   pinInput,
-  avatar
+  avatar,
+  tabs,
+  menu,
 };
 export const slotRecipes = {
   card,

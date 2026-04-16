@@ -1,23 +1,38 @@
-import { Button, Text } from './ui';
+import { Box, Button } from './ui';
 
 interface NavButtonProps {
   label: string;
   icon: React.ReactNode;
+  isActive?: boolean;
   onClick?: () => void;
 }
 
-export const NavButton = ({ label, icon, onClick }: NavButtonProps) => (
+export const NavButton = ({
+  label,
+  icon,
+  isActive,
+  onClick,
+}: NavButtonProps) => (
   <Button
     variant="plain"
     justifyContent="center"
-    color="gray.800"
+    color={isActive ? 'white' : 'gray.primary'}
     display="flex"
     flexDirection="column"
-    gap={1}
+    gap="1"
     height="auto"
+    aria-label={label}
     onClick={onClick}
   >
-    {icon}
-    <Text fontWeight="normal">{label}</Text>
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      bg={isActive ? 'blue.primary' : 'transparent'}
+      borderRadius="full"
+      p="2"
+    >
+      {icon}
+    </Box>
   </Button>
 );

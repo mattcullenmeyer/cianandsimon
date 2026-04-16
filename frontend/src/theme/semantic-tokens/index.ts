@@ -26,6 +26,17 @@ export const semanticTokens = defineSemanticTokens({
         value: { base: '{colors.sky.200}' },
       },
     },
+    gray: {
+      primary: {
+        value: { base: '{colors.neutral.400}' },
+      },
+      secondary: {
+        value: { base: '{colors.neutral.200}' },
+      },
+      tertiary: {
+        value: { base: '{colors.neutral.100}' },
+      },
+    },
     // Background tokens
     bg: {
       DEFAULT: {

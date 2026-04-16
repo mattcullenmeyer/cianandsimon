@@ -15,11 +15,17 @@ import { Route as SelectFamilyRouteImport } from './routes/select-family'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as KioskRouteImport } from './routes/kiosk'
 import { Route as CreateFamilyRouteImport } from './routes/create-family'
-import { Route as HomeRouteImport } from './routes/_home'
+import { Route as HomeRouteRouteImport } from './routes/home/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as HomeSettingsRouteImport } from './routes/_home/settings'
-import { Route as HomeHomeRouteImport } from './routes/_home/home'
-import { Route as HomeChoresRouteImport } from './routes/_home/chores'
+import { Route as HomeIndexRouteImport } from './routes/home/index'
+import { Route as HomeSettingsRouteImport } from './routes/home/settings'
+import { Route as HomeKidsRouteImport } from './routes/home/kids'
+import { Route as HomeChoresRouteRouteImport } from './routes/home/chores/route'
+import { Route as HomeChoresIndexRouteImport } from './routes/home/chores/index'
+import { Route as HomeChoresPendingRouteImport } from './routes/home/chores/pending'
+import { Route as HomeChoresLibraryRouteImport } from './routes/home/chores/library'
+import { Route as HomeChoresCompletedRouteImport } from './routes/home/chores/completed'
+import { Route as HomeChoresActiveRouteImport } from './routes/home/chores/active'
 
 const VerifyEmailRoute = VerifyEmailRouteImport.update({
   id: '/verify-email',
@@ -51,8 +57,9 @@ const CreateFamilyRoute = CreateFamilyRouteImport.update({
   path: '/create-family',
   getParentRoute: () => rootRouteImport,
 } as any)
-const HomeRoute = HomeRouteImport.update({
-  id: '/_home',
+const HomeRouteRoute = HomeRouteRouteImport.update({
+  id: '/home',
+  path: '/home',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -60,33 +67,70 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HomeIndexRoute = HomeIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => HomeRouteRoute,
+} as any)
 const HomeSettingsRoute = HomeSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
-  getParentRoute: () => HomeRoute,
+  getParentRoute: () => HomeRouteRoute,
 } as any)
-const HomeHomeRoute = HomeHomeRouteImport.update({
-  id: '/home',
-  path: '/home',
-  getParentRoute: () => HomeRoute,
+const HomeKidsRoute = HomeKidsRouteImport.update({
+  id: '/kids',
+  path: '/kids',
+  getParentRoute: () => HomeRouteRoute,
 } as any)
-const HomeChoresRoute = HomeChoresRouteImport.update({
+const HomeChoresRouteRoute = HomeChoresRouteRouteImport.update({
   id: '/chores',
   path: '/chores',
-  getParentRoute: () => HomeRoute,
+  getParentRoute: () => HomeRouteRoute,
+} as any)
+const HomeChoresIndexRoute = HomeChoresIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => HomeChoresRouteRoute,
+} as any)
+const HomeChoresPendingRoute = HomeChoresPendingRouteImport.update({
+  id: '/pending',
+  path: '/pending',
+  getParentRoute: () => HomeChoresRouteRoute,
+} as any)
+const HomeChoresLibraryRoute = HomeChoresLibraryRouteImport.update({
+  id: '/library',
+  path: '/library',
+  getParentRoute: () => HomeChoresRouteRoute,
+} as any)
+const HomeChoresCompletedRoute = HomeChoresCompletedRouteImport.update({
+  id: '/completed',
+  path: '/completed',
+  getParentRoute: () => HomeChoresRouteRoute,
+} as any)
+const HomeChoresActiveRoute = HomeChoresActiveRouteImport.update({
+  id: '/active',
+  path: '/active',
+  getParentRoute: () => HomeChoresRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/home': typeof HomeRouteRouteWithChildren
   '/create-family': typeof CreateFamilyRoute
   '/kiosk': typeof KioskRoute
   '/login': typeof LoginRoute
   '/select-family': typeof SelectFamilyRoute
   '/signup': typeof SignupRoute
   '/verify-email': typeof VerifyEmailRoute
-  '/chores': typeof HomeChoresRoute
-  '/home': typeof HomeHomeRoute
-  '/settings': typeof HomeSettingsRoute
+  '/home/chores': typeof HomeChoresRouteRouteWithChildren
+  '/home/kids': typeof HomeKidsRoute
+  '/home/settings': typeof HomeSettingsRoute
+  '/home/': typeof HomeIndexRoute
+  '/home/chores/active': typeof HomeChoresActiveRoute
+  '/home/chores/completed': typeof HomeChoresCompletedRoute
+  '/home/chores/library': typeof HomeChoresLibraryRoute
+  '/home/chores/pending': typeof HomeChoresPendingRoute
+  '/home/chores/': typeof HomeChoresIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -96,37 +140,55 @@ export interface FileRoutesByTo {
   '/select-family': typeof SelectFamilyRoute
   '/signup': typeof SignupRoute
   '/verify-email': typeof VerifyEmailRoute
-  '/chores': typeof HomeChoresRoute
-  '/home': typeof HomeHomeRoute
-  '/settings': typeof HomeSettingsRoute
+  '/home/kids': typeof HomeKidsRoute
+  '/home/settings': typeof HomeSettingsRoute
+  '/home': typeof HomeIndexRoute
+  '/home/chores/active': typeof HomeChoresActiveRoute
+  '/home/chores/completed': typeof HomeChoresCompletedRoute
+  '/home/chores/library': typeof HomeChoresLibraryRoute
+  '/home/chores/pending': typeof HomeChoresPendingRoute
+  '/home/chores': typeof HomeChoresIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/_home': typeof HomeRouteWithChildren
+  '/home': typeof HomeRouteRouteWithChildren
   '/create-family': typeof CreateFamilyRoute
   '/kiosk': typeof KioskRoute
   '/login': typeof LoginRoute
   '/select-family': typeof SelectFamilyRoute
   '/signup': typeof SignupRoute
   '/verify-email': typeof VerifyEmailRoute
-  '/_home/chores': typeof HomeChoresRoute
-  '/_home/home': typeof HomeHomeRoute
-  '/_home/settings': typeof HomeSettingsRoute
+  '/home/chores': typeof HomeChoresRouteRouteWithChildren
+  '/home/kids': typeof HomeKidsRoute
+  '/home/settings': typeof HomeSettingsRoute
+  '/home/': typeof HomeIndexRoute
+  '/home/chores/active': typeof HomeChoresActiveRoute
+  '/home/chores/completed': typeof HomeChoresCompletedRoute
+  '/home/chores/library': typeof HomeChoresLibraryRoute
+  '/home/chores/pending': typeof HomeChoresPendingRoute
+  '/home/chores/': typeof HomeChoresIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/home'
     | '/create-family'
     | '/kiosk'
     | '/login'
     | '/select-family'
     | '/signup'
     | '/verify-email'
-    | '/chores'
-    | '/home'
-    | '/settings'
+    | '/home/chores'
+    | '/home/kids'
+    | '/home/settings'
+    | '/home/'
+    | '/home/chores/active'
+    | '/home/chores/completed'
+    | '/home/chores/library'
+    | '/home/chores/pending'
+    | '/home/chores/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -136,27 +198,38 @@ export interface FileRouteTypes {
     | '/select-family'
     | '/signup'
     | '/verify-email'
-    | '/chores'
+    | '/home/kids'
+    | '/home/settings'
     | '/home'
-    | '/settings'
+    | '/home/chores/active'
+    | '/home/chores/completed'
+    | '/home/chores/library'
+    | '/home/chores/pending'
+    | '/home/chores'
   id:
     | '__root__'
     | '/'
-    | '/_home'
+    | '/home'
     | '/create-family'
     | '/kiosk'
     | '/login'
     | '/select-family'
     | '/signup'
     | '/verify-email'
-    | '/_home/chores'
-    | '/_home/home'
-    | '/_home/settings'
+    | '/home/chores'
+    | '/home/kids'
+    | '/home/settings'
+    | '/home/'
+    | '/home/chores/active'
+    | '/home/chores/completed'
+    | '/home/chores/library'
+    | '/home/chores/pending'
+    | '/home/chores/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  HomeRoute: typeof HomeRouteWithChildren
+  HomeRouteRoute: typeof HomeRouteRouteWithChildren
   CreateFamilyRoute: typeof CreateFamilyRoute
   KioskRoute: typeof KioskRoute
   LoginRoute: typeof LoginRoute
@@ -209,11 +282,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CreateFamilyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_home': {
-      id: '/_home'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof HomeRouteImport
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -223,47 +296,113 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_home/settings': {
-      id: '/_home/settings'
+    '/home/': {
+      id: '/home/'
+      path: '/'
+      fullPath: '/home/'
+      preLoaderRoute: typeof HomeIndexRouteImport
+      parentRoute: typeof HomeRouteRoute
+    }
+    '/home/settings': {
+      id: '/home/settings'
       path: '/settings'
-      fullPath: '/settings'
+      fullPath: '/home/settings'
       preLoaderRoute: typeof HomeSettingsRouteImport
-      parentRoute: typeof HomeRoute
+      parentRoute: typeof HomeRouteRoute
     }
-    '/_home/home': {
-      id: '/_home/home'
-      path: '/home'
-      fullPath: '/home'
-      preLoaderRoute: typeof HomeHomeRouteImport
-      parentRoute: typeof HomeRoute
+    '/home/kids': {
+      id: '/home/kids'
+      path: '/kids'
+      fullPath: '/home/kids'
+      preLoaderRoute: typeof HomeKidsRouteImport
+      parentRoute: typeof HomeRouteRoute
     }
-    '/_home/chores': {
-      id: '/_home/chores'
+    '/home/chores': {
+      id: '/home/chores'
       path: '/chores'
-      fullPath: '/chores'
-      preLoaderRoute: typeof HomeChoresRouteImport
-      parentRoute: typeof HomeRoute
+      fullPath: '/home/chores'
+      preLoaderRoute: typeof HomeChoresRouteRouteImport
+      parentRoute: typeof HomeRouteRoute
+    }
+    '/home/chores/': {
+      id: '/home/chores/'
+      path: '/'
+      fullPath: '/home/chores/'
+      preLoaderRoute: typeof HomeChoresIndexRouteImport
+      parentRoute: typeof HomeChoresRouteRoute
+    }
+    '/home/chores/pending': {
+      id: '/home/chores/pending'
+      path: '/pending'
+      fullPath: '/home/chores/pending'
+      preLoaderRoute: typeof HomeChoresPendingRouteImport
+      parentRoute: typeof HomeChoresRouteRoute
+    }
+    '/home/chores/library': {
+      id: '/home/chores/library'
+      path: '/library'
+      fullPath: '/home/chores/library'
+      preLoaderRoute: typeof HomeChoresLibraryRouteImport
+      parentRoute: typeof HomeChoresRouteRoute
+    }
+    '/home/chores/completed': {
+      id: '/home/chores/completed'
+      path: '/completed'
+      fullPath: '/home/chores/completed'
+      preLoaderRoute: typeof HomeChoresCompletedRouteImport
+      parentRoute: typeof HomeChoresRouteRoute
+    }
+    '/home/chores/active': {
+      id: '/home/chores/active'
+      path: '/active'
+      fullPath: '/home/chores/active'
+      preLoaderRoute: typeof HomeChoresActiveRouteImport
+      parentRoute: typeof HomeChoresRouteRoute
     }
   }
 }
 
-interface HomeRouteChildren {
-  HomeChoresRoute: typeof HomeChoresRoute
-  HomeHomeRoute: typeof HomeHomeRoute
+interface HomeChoresRouteRouteChildren {
+  HomeChoresActiveRoute: typeof HomeChoresActiveRoute
+  HomeChoresCompletedRoute: typeof HomeChoresCompletedRoute
+  HomeChoresLibraryRoute: typeof HomeChoresLibraryRoute
+  HomeChoresPendingRoute: typeof HomeChoresPendingRoute
+  HomeChoresIndexRoute: typeof HomeChoresIndexRoute
+}
+
+const HomeChoresRouteRouteChildren: HomeChoresRouteRouteChildren = {
+  HomeChoresActiveRoute: HomeChoresActiveRoute,
+  HomeChoresCompletedRoute: HomeChoresCompletedRoute,
+  HomeChoresLibraryRoute: HomeChoresLibraryRoute,
+  HomeChoresPendingRoute: HomeChoresPendingRoute,
+  HomeChoresIndexRoute: HomeChoresIndexRoute,
+}
+
+const HomeChoresRouteRouteWithChildren = HomeChoresRouteRoute._addFileChildren(
+  HomeChoresRouteRouteChildren,
+)
+
+interface HomeRouteRouteChildren {
+  HomeChoresRouteRoute: typeof HomeChoresRouteRouteWithChildren
+  HomeKidsRoute: typeof HomeKidsRoute
   HomeSettingsRoute: typeof HomeSettingsRoute
+  HomeIndexRoute: typeof HomeIndexRoute
 }
 
-const HomeRouteChildren: HomeRouteChildren = {
-  HomeChoresRoute: HomeChoresRoute,
-  HomeHomeRoute: HomeHomeRoute,
+const HomeRouteRouteChildren: HomeRouteRouteChildren = {
+  HomeChoresRouteRoute: HomeChoresRouteRouteWithChildren,
+  HomeKidsRoute: HomeKidsRoute,
   HomeSettingsRoute: HomeSettingsRoute,
+  HomeIndexRoute: HomeIndexRoute,
 }
 
-const HomeRouteWithChildren = HomeRoute._addFileChildren(HomeRouteChildren)
+const HomeRouteRouteWithChildren = HomeRouteRoute._addFileChildren(
+  HomeRouteRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  HomeRoute: HomeRouteWithChildren,
+  HomeRouteRoute: HomeRouteRouteWithChildren,
   CreateFamilyRoute: CreateFamilyRoute,
   KioskRoute: KioskRoute,
   LoginRoute: LoginRoute,

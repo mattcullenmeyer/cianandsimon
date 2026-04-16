@@ -17,3 +17,9 @@ pnpm build
 aws s3 sync dist/ s3://cianandsimon.xyz --profile default
 aws cloudfront create-invalidation --distribution-id EOIC8GYMH9AO6 --paths '/*' --profile default
 ```
+
+## DuoLingo Screenshots
+
+- [Friends Quest](https://dribbble.com/shots/19402380-Friends-Quest)
+- [New Duolingo Achievements](https://dribbble.com/shots/8560257-New-Duolingo-Achievements)
+- [User Profile](https://dribbble.com/shots/10830724-User-Profile)

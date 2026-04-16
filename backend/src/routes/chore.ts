@@ -85,28 +85,32 @@ const createAssignmentSchema = z.object({
 });
 
 router.post('/assignment', requireFamilyAuth, async (req, res) => {
-  const result = createAssignmentSchema.safeParse(req.body);
-  if (!result.success) {
-    res.status(400).json({ errors: result.error.issues });
+  const parsed = createAssignmentSchema.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({ errors: parsed.error.issues });
     return;
   }
 
-  const { templateId, childId } = result.data;
+  const { templateId, childId } = parsed.data;
   const { parentId, familyId } = res.locals;
 
-  const assignmentId = await createAssignmentFromTemplate({
+  const result = await createAssignmentFromTemplate({
     familyId,
     templateId,
     childId,
     assignedBy: parentId,
   });
 
-  if (!assignmentId) {
-    res.status(404).json({ error: 'Template not found' });
+  if (!result.success) {
+    if (result.reason === 'TEMPLATE_NOT_FOUND') {
+      res.status(404).json({ error: 'Template not found' });
+    } else {
+      res.status(409).json({ error: 'Chore already assigned to this child' });
+    }
     return;
   }
 
-  res.status(201).json({ assignmentId });
+  res.status(201).json({ assignmentId: result.assignmentId });
 });
 
 // This route is only for testing purposes to trigger scheduled assignments manually in development

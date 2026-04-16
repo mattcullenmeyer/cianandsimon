@@ -4,6 +4,28 @@ import { defineSemanticTokens } from '@pandacss/dev';
 
 export const semanticTokens = defineSemanticTokens({
   colors: {
+    green: {
+      primary: {
+        value: { base: '{colors.lime.500}' },
+      },
+      secondary: {
+        value: { base: '{colors.lime.400}' },
+      },
+      tertiary: {
+        value: { base: '{colors.lime.200}' },
+      },
+    },
+    blue: {
+      primary: {
+        value: { base: '{colors.cyan.500}' },
+      },
+      secondary: {
+        value: { base: '{colors.cyan.400}' },
+      },
+      tertiary: {
+        value: { base: '{colors.sky.200}' },
+      },
+    },
     // Background tokens
     bg: {
       DEFAULT: {

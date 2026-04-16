@@ -9,6 +9,10 @@ import { AssignmentStatus } from '../../constants';
 import { dynamodb } from '../../db';
 import { createAssignment, timezoneFormatter } from '../../helpers';
 
+type CreateAssignmentResult =
+  | { success: true; assignmentId: string }
+  | { success: false; reason: 'TEMPLATE_NOT_FOUND' | 'ALREADY_ASSIGNED' };
+
 export async function createAssignmentFromTemplate({
   familyId,
   templateId,
@@ -19,7 +23,7 @@ export async function createAssignmentFromTemplate({
   templateId: string;
   childId: string;
   assignedBy: string;
-}): Promise<string | null> {
+}): Promise<CreateAssignmentResult> {
   const result = await dynamodb.send(
     new GetItemCommand({
       TableName: process.env.DYNAMODB_TABLE_NAME,
@@ -30,20 +34,21 @@ export async function createAssignmentFromTemplate({
     })
   );
 
-  if (!result.Item) return null;
+  if (!result.Item) return { success: false, reason: 'TEMPLATE_NOT_FOUND' };
 
   const existingAssignments = result.Item.assignments?.L ?? [];
   const alreadyAssigned = existingAssignments.some(
     (a) => a.M?.childId?.S === childId
   );
-  if (alreadyAssigned) return null;
+  if (alreadyAssigned) return { success: false, reason: 'ALREADY_ASSIGNED' };
 
-  return createAssignment({
+  const assignmentId = await createAssignment({
     template: result.Item,
     childId,
     familyId,
     assignedBy,
   });
+  return { success: true, assignmentId };
 }
 
 export async function updateAssignmentSubtasks({
@@ -262,6 +267,7 @@ export async function queryAssignmentsByStatus({
     status: item.status.S!,
     assignedAt: item.assignedAt.S!,
     assignedBy: item.assignedBy.S!,
+    ttl: item.ttl?.N ? Number(item.ttl.N) : undefined,
   }));
 }
 

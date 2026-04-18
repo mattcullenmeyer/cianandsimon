@@ -26,6 +26,7 @@ export const AssignmentCard = ({
 
   return (
     <Box
+      as="button"
       px="3"
       py="2"
       display="flex"
@@ -65,7 +66,7 @@ export const AssignmentCard = ({
         <Text textStyle="sm" fontWeight="medium" color="purple.secondary">
           ${value.toFixed(2)}
         </Text>
-        <ChevronRight strokeWidth={1.5} size={20} />
+        <ChevronRight strokeWidth={2.5} size={20} />
       </Box>
     </Box>
   );

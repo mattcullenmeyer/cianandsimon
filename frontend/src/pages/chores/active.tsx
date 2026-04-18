@@ -71,49 +71,60 @@ export const ActiveChoresTab = () => {
   }, []);
 
   return (
-    <Box display="flex" flexDirection="column" flex="1" overflow="hidden">
-      <Box flex="1" overflowY="auto">
-        {loading && (
-          <Box display="flex" justifyContent="center" mt="8">
-            <Spinner />
-          </Box>
-        )}
-        {!loading && error && <Text color="fg.error">{error}</Text>}
-        {!loading && !error && assignments.length === 0 && (
-          <Text color="fg.muted">No active chores.</Text>
-        )}
-        {!loading && !error && assignments.length > 0 && (
-          <Box
-            display="flex"
-            flexDirection="column"
-            borderWidth="2px"
-            borderRadius="xl"
-          >
-            {assignments.map((assignment) => (
-              <AssignmentCard
-                key={assignment.assignmentId}
-                title={assignment.title}
-                value={assignment.value}
-                childName={
-                  childrenById[assignment.childId] ?? assignment.childId
-                }
-                ttl={assignment.ttl}
-              />
-            ))}
-          </Box>
-        )}
-      </Box>
+    <>
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Text textStyle="xl" fontWeight="semibold">
+          Active Chores
+        </Text>
 
-      <Box pt="4" p="1">
-        <Button
-          width="full"
-          justifyContent="center"
-          fontWeight="medium"
-          css={{ '--btn-bg': '{colors.green.primary}' }}
-        >
-          ASSIGN CHORE
+        <Button size="xs" variant="outline">
+          FILTER
         </Button>
       </Box>
-    </Box>
+
+      <Box display="flex" flexDirection="column" flex="1" overflow="hidden">
+        <Box flex="1" overflowY="auto">
+          {loading && (
+            <Box display="flex" justifyContent="center" mt="8">
+              <Spinner />
+            </Box>
+          )}
+          {!loading && error && <Text color="fg.error">{error}</Text>}
+          {!loading && !error && assignments.length === 0 && (
+            <Text color="fg.muted">No active chores.</Text>
+          )}
+          {!loading && !error && assignments.length > 0 && (
+            <Box
+              display="flex"
+              flexDirection="column"
+              borderWidth="2px"
+              borderRadius="xl"
+            >
+              {assignments.map((assignment) => (
+                <AssignmentCard
+                  key={assignment.assignmentId}
+                  title={assignment.title}
+                  value={assignment.value}
+                  childName={
+                    childrenById[assignment.childId] ?? assignment.childId
+                  }
+                  ttl={assignment.ttl}
+                />
+              ))}
+            </Box>
+          )}
+        </Box>
+
+        <Box pt="4" p="1">
+          <Button
+            width="full"
+            justifyContent="center"
+            css={{ '--btn-bg': '{colors.green.primary}' }}
+          >
+            ASSIGN CHORE
+          </Button>
+        </Box>
+      </Box>
+    </>
   );
 };

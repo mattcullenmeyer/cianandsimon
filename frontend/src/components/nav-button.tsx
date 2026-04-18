@@ -28,8 +28,10 @@ export const NavButton = ({
       display="flex"
       alignItems="center"
       justifyContent="center"
-      bg={isActive ? 'blue.primary' : 'transparent'}
-      borderRadius="full"
+      bg={isActive ? 'blue.secondary' : 'transparent'}
+      borderWidth="2px"
+      borderColor={isActive ? 'blue.primary' : 'transparent'}
+      borderRadius="xl"
       p="2"
     >
       {icon}

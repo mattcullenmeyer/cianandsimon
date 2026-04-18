@@ -11,7 +11,7 @@ export const button = defineRecipe({
     cursor: 'pointer',
     display: 'inline-flex',
     flexShrink: '0',
-    fontWeight: 'semibold',
+    fontWeight: 'medium',
     gap: '2',
     isolation: 'isolate',
     justifyContent: 'space-between', // center
@@ -75,10 +75,12 @@ export const button = defineRecipe({
         },
       },
       outline: {
-        borderWidth: '1px',
-        borderColor: 'border',
-        color: 'fg',
+        '--btn-border-color': '{colors.border}',
+        borderWidth: '2px',
+        borderColor: 'var(--btn-border-color)',
+        color: '{colors.blue.primary}',
         bg: 'white',
+        boxShadow: '0 2px 0 0 var(--btn-border-color)',
       },
       plain: {
         color: 'fg',

@@ -4,7 +4,11 @@ import {
   useSearch,
 } from '@tanstack/react-router';
 import { z } from 'zod';
-import { Box, Tabs, Text } from '@/components/ui';
+import {
+  Box,
+  Tabs,
+  // Text
+} from '@/components/ui';
 import { ActiveChoresTab } from '@/pages/chores/active';
 import { CompleteChoresTab } from '@/pages/chores/complete';
 import { PendingChoresTab } from '@/pages/chores/pending';
@@ -52,14 +56,14 @@ function ChoresPage() {
       <Box
         display="flex"
         flexDirection="column"
-        gap="4"
+        gap="6"
         p="4"
         flex="1"
         overflow="hidden"
       >
-        <Text textStyle="xl" fontWeight="semibold">
+        {/* <Text textStyle="xl" fontWeight="semibold">
           {tab.charAt(0).toUpperCase() + tab.slice(1)} Chores
-        </Text>
+        </Text> */}
 
         {tab === 'active' && <ActiveChoresTab />}
         {tab === 'pending' && <PendingChoresTab />}

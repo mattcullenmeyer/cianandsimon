@@ -1,5 +1,5 @@
-import { tabsAnatomy } from '@ark-ui/react/anatomy'
-import { defineSlotRecipe } from '@pandacss/dev'
+import { tabsAnatomy } from '@ark-ui/react/anatomy';
+import { defineSlotRecipe } from '@pandacss/dev';
 
 export const tabs = defineSlotRecipe({
   slots: tabsAnatomy.keys(),
@@ -30,10 +30,11 @@ export const tabs = defineSlotRecipe({
       },
     },
     trigger: {
+      letterSpacing: '{letterSpacings.wider}',
       alignItems: 'center',
       cursor: 'pointer',
       display: 'flex',
-      fontWeight: 'semibold',
+      fontWeight: 'medium',
       outline: '0',
       position: 'relative',
       _focusVisible: {
@@ -87,18 +88,18 @@ export const tabs = defineSlotRecipe({
         },
         list: {
           _horizontal: {
-            borderBottomWidth: '1px',
+            borderBottomWidth: '2px',
           },
           _vertical: {
-            borderStartWidth: '1px',
+            borderStartWidth: '2px',
           },
         },
         indicator: {
-          background: 'accent',
+          background: '{colors.blue.primary}',
           _horizontal: {
             bottom: '0',
-            height: '0.5',
-            transform: 'translateY(1px)',
+            height: '1',
+            transform: 'translateY(3px)',
           },
           _vertical: {
             left: '0',
@@ -107,9 +108,9 @@ export const tabs = defineSlotRecipe({
           },
         },
         trigger: {
-          color: 'fg.muted',
+          color: '{colors.gray.primary}',
           _selected: {
-            color: 'fg',
+            color: '{colors.blue.primary}',
           },
         },
       },
@@ -167,4 +168,4 @@ export const tabs = defineSlotRecipe({
     size: 'md',
     variant: 'line',
   },
-})
+});

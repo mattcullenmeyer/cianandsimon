@@ -1,5 +1,10 @@
 import { useNavigate, useRouterState } from '@tanstack/react-router';
-import { Avatar, Box, Tabs, Text } from '@/components/ui';
+import {
+  // Avatar,
+  Box,
+  Tabs,
+  Text,
+} from '@/components/ui';
 
 const TABS = [
   { value: 'chores', label: 'Chores' },
@@ -24,9 +29,9 @@ export const TopNav = () => {
         justifyContent="space-between"
       >
         <Text fontWeight="medium">Top nav</Text>
-        <Avatar.Root>
+        {/* <Avatar.Root>
           <Avatar.Fallback />
-        </Avatar.Root>
+        </Avatar.Root> */}
       </Box>
       <Tabs.Root
         value={activeTab}

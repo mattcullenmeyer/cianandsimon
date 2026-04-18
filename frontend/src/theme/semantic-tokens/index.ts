@@ -6,13 +6,10 @@ export const semanticTokens = defineSemanticTokens({
   colors: {
     green: {
       primary: {
-        value: { base: '{colors.lime.500}' },
+        value: { base: '{colors.green.500}' },
       },
       secondary: {
-        value: { base: '{colors.lime.400}' },
-      },
-      tertiary: {
-        value: { base: '{colors.lime.200}' },
+        value: { base: '{colors.green.400}' },
       },
     },
     blue: {
@@ -22,8 +19,21 @@ export const semanticTokens = defineSemanticTokens({
       secondary: {
         value: { base: '{colors.cyan.400}' },
       },
-      tertiary: {
-        value: { base: '{colors.sky.200}' },
+    },
+    orange: {
+      primary: {
+        value: { base: '{colors.orange.400}' },
+      },
+      secondary: {
+        value: { base: '{colors.amber.500}' },
+      },
+    },
+    purple: {
+      primary: {
+        value: { base: '{colors.purple.600}' },
+      },
+      secondary: {
+        value: { base: '{colors.purple.500}' },
       },
     },
     gray: {
@@ -32,9 +42,6 @@ export const semanticTokens = defineSemanticTokens({
       },
       secondary: {
         value: { base: '{colors.neutral.200}' },
-      },
-      tertiary: {
-        value: { base: '{colors.neutral.100}' },
       },
     },
     // Background tokens

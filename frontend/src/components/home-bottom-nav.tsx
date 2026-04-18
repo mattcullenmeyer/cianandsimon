@@ -3,7 +3,7 @@ import { Box } from '@/components/ui';
 import { NavButton } from '@/components/nav-button';
 import { ClipboardList, UsersRound, BookText, Settings } from 'lucide-react';
 
-const SIZE = 40;
+const SIZE = 36;
 const STROKE_WIDTH = '1.25px';
 
 export const HomeBottomNav = () => {

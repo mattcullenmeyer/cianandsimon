@@ -21,5 +21,7 @@ aws cloudfront create-invalidation --distribution-id EOIC8GYMH9AO6 --paths '/*' 
 ## DuoLingo Screenshots
 
 - [Friends Quest](https://dribbble.com/shots/19402380-Friends-Quest)
-- [New Duolingo Achievements](https://dribbble.com/shots/8560257-New-Duolingo-Achievements)
+- [New Achievements](https://dribbble.com/shots/8560257-New-Duolingo-Achievements)
 - [User Profile](https://dribbble.com/shots/10830724-User-Profile)
+- [Design System Elements](https://dribbble.com/shots/3836227-Duolingo-Design-System-Elements)
+- [Design System](https://dribbble.com/shots/3830836-Duolingo-Design-System-1-0)

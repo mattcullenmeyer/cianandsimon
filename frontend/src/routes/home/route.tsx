@@ -9,9 +9,11 @@ export const Route = createFileRoute('/home')({
 function HomeLayout() {
   return (
     <Box display="flex" flexDirection="column" height="100dvh">
-      <Box px="6" py="8" flex="1">
+      {/* <Box px="6" py="8" flex="1"> */}
+      <Box flex="1" display="flex" flexDirection="column" overflow="hidden">
         <Outlet />
       </Box>
+      {/* </Box> */}
 
       <HomeBottomNav />
     </Box>

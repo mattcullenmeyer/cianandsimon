@@ -1,4 +1,5 @@
-import { Avatar, Box, Card, Text } from '@/components/ui';
+import { Box, Text } from '@/components/ui';
+import { Calendar, ChevronRight, User } from 'lucide-react';
 
 interface AssignmentCardProps {
   title: string;
@@ -13,6 +14,7 @@ export const AssignmentCard = ({
   childName,
   ttl,
 }: AssignmentCardProps) => {
+  // const ttl = 1745193600; // for testing
   const dueDate = ttl
     ? new Date(ttl * 1000).toLocaleDateString(undefined, {
         month: 'short',
@@ -23,40 +25,48 @@ export const AssignmentCard = ({
     : null;
 
   return (
-    <Card.Root>
-      <Card.Body
-        px="4"
-        py="2"
-        display="flex"
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        <Box display="flex" flexDirection="row" alignItems="center" gap="4">
-          <Avatar.Root>
-            <Avatar.Fallback />
-          </Avatar.Root>
+    <Box
+      px="3"
+      py="2"
+      display="flex"
+      flexDirection="row"
+      justifyContent="space-between"
+      alignItems="center"
+      css={{ '&:not(:last-child)': { borderBottomWidth: '2px' } }}
+    >
+      <Box display="flex" flexDirection="row" alignItems="center" gap="4">
+        <Box display="flex" flexDirection="column" gap="0.5">
+          <Text textStyle="sm" fontWeight="medium">
+            {title}
+          </Text>
 
-          <Box display="flex" flexDirection="column" gap="0">
-            <Text fontWeight="medium">{title}</Text>
-
-            <Box>
-              <Text textStyle="sm" color="fg.muted">
-                {childName}
-              </Text>
-              {dueDate && (
-                <Text textStyle="sm" color="fg.muted">
-                  Due {dueDate}
-                </Text>
-              )}
+          <Box display="flex" flexDirection="row" gap="2" alignItems="center">
+            <Box display="flex" alignItems="center" gap="1" color="fg.muted">
+              <User size={12} strokeWidth={1.5} />
+              <Text textStyle="xs">{childName}</Text>
             </Box>
+            {dueDate && (
+              <Box display="flex" alignItems="center" gap="1" color="fg.muted">
+                <Calendar size={12} strokeWidth={1.5} />
+                <Text textStyle="xs">{dueDate}</Text>
+              </Box>
+            )}
           </Box>
         </Box>
+      </Box>
 
-        <Text fontWeight="medium" color="accent.emphasis">
+      <Box
+        display="flex"
+        flexDirection="row"
+        alignItems="center"
+        gap="1"
+        color="gray.primary"
+      >
+        <Text textStyle="sm" fontWeight="medium" color="purple.secondary">
           ${value.toFixed(2)}
         </Text>
-      </Card.Body>
-    </Card.Root>
+        <ChevronRight strokeWidth={1.5} size={20} />
+      </Box>
+    </Box>
   );
 };

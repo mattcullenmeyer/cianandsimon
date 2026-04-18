@@ -4,9 +4,10 @@ export const button = defineRecipe({
   className: 'button',
   jsx: ['Button', 'IconButton', 'CloseButton', 'ButtonGroup'],
   base: {
+    letterSpacing: '{letterSpacings.wider}',
     alignItems: 'center',
     appearance: 'none',
-    borderRadius: 'sm',
+    borderRadius: 'xl',
     cursor: 'pointer',
     display: 'inline-flex',
     flexShrink: '0',
@@ -36,11 +37,14 @@ export const button = defineRecipe({
   variants: {
     variant: {
       solid: {
-        bg: 'accent',
-        color: 'fg.inverted',
-        _hover: {
-          bg: 'accent.emphasis',
-        },
+        '--btn-bg': '{colors.blue.primary}',
+        bg: 'var(--btn-bg)',
+        color: '{colors.white}',
+        '--btn-shadow-color': 'color-mix(in srgb, var(--btn-bg) 80%, black)',
+        boxShadow: '0 4px 0 0 var(--btn-shadow-color)',
+        // _hover: {
+        //   bg: 'accent.emphasis',
+        // },
       },
       surface: {
         bg: 'bg.surface',

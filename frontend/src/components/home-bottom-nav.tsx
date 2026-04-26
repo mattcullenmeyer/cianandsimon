@@ -3,8 +3,8 @@ import { Box } from '@/components/ui';
 import { NavButton } from '@/components/nav-button';
 import { ClipboardList, UsersRound, BookText, Settings } from 'lucide-react';
 
-const SIZE = 36;
-const STROKE_WIDTH = '1.25px';
+const SIZE = 32;
+const STROKE_WIDTH = '1.5px';
 
 export const HomeBottomNav = () => {
   const navigate = useNavigate();
@@ -29,7 +29,9 @@ export const HomeBottomNav = () => {
       <NavButton
         label="Library"
         icon={<BookText strokeWidth={STROKE_WIDTH} size={SIZE} />}
-        onClick={() => navigate({ to: '/home/library' })}
+        onClick={() =>
+          navigate({ to: '/home/library', search: { tab: 'unscheduled' } })
+        }
         isActive={location.pathname === '/home/library'}
       />
 

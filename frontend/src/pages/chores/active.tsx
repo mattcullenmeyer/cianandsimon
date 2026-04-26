@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
+import { getRouteApi } from '@tanstack/react-router';
 import { AssignmentCard } from '@/components/assignment-card';
 import { Box, Button, Spinner, Text } from '@/components/ui';
 import { config } from '@/config';
 
-interface Child {
-  childId: string;
-  name: string;
-}
+const homeRoute = getRouteApi('/home');
 
 interface Assignment {
   assignmentId: string;
@@ -17,8 +15,10 @@ interface Assignment {
 }
 
 export const ActiveChoresTab = () => {
+  const { children } = homeRoute.useLoaderData();
+  const childrenById = Object.fromEntries(children.map((c) => [c.childId, c.name]));
+
   const [assignments, setAssignments] = useState<Assignment[]>([]);
-  const [childrenById, setChildrenById] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -26,40 +26,19 @@ export const ActiveChoresTab = () => {
     setLoading(true);
     setError('');
 
-    // const statusMap = {
-    //   active: 'active',
-    //   pending: 'pending',
-    //   complete: 'history',
-    // } as const;
-    // const endpoint = statusMap[tab];
-
     const fetchData = async () => {
       try {
-        const [childrenRes, assignmentsRes] = await Promise.all([
-          fetch(`${config.apiEndpoint}/family/children`, {
-            credentials: 'include',
-          }),
-          fetch(`${config.apiEndpoint}/chore/assignments/active`, {
-            credentials: 'include',
-          }),
-        ]);
+        const res = await fetch(`${config.apiEndpoint}/chore/assignments/active`, {
+          credentials: 'include',
+        });
 
-        if (!childrenRes.ok || !assignmentsRes.ok) {
+        if (!res.ok) {
           setError('Failed to load assignments.');
           return;
         }
 
-        const [childrenData, assignmentsData] = await Promise.all([
-          childrenRes.json() as Promise<{ children: Child[] }>,
-          assignmentsRes.json() as Promise<{ assignments: Assignment[] }>,
-        ]);
-
-        setChildrenById(
-          Object.fromEntries(
-            childrenData.children.map((c) => [c.childId, c.name])
-          )
-        );
-        setAssignments(assignmentsData.assignments);
+        const data: { assignments: Assignment[] } = await res.json();
+        setAssignments(data.assignments);
       } catch {
         setError('Something went wrong.');
       } finally {

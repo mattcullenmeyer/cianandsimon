@@ -16,7 +16,7 @@ export const NavButton = ({
   <Button
     variant="plain"
     justifyContent="center"
-    color={isActive ? 'white' : 'gray.primary'}
+    color={isActive ? 'blue.primary' : 'gray.primary'}
     display="flex"
     flexDirection="column"
     gap="1"
@@ -28,11 +28,11 @@ export const NavButton = ({
       display="flex"
       alignItems="center"
       justifyContent="center"
-      bg={isActive ? 'blue.secondary' : 'transparent'}
+      bg={isActive ? 'sky.100' : 'transparent'}
       borderWidth="2px"
       borderColor={isActive ? 'blue.primary' : 'transparent'}
       borderRadius="xl"
-      p="2"
+      p="1.5"
     >
       {icon}
     </Box>

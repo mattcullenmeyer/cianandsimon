@@ -4,6 +4,8 @@
 `cd backend && nvm use && pnpm dev`  
 `cd frontend && nvm use && pnpm dev`
 
+http://localhost:5173
+
 # TODO
 
 - [ ] Refresh JWT

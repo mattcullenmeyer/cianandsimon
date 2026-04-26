@@ -1,6 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Text } from '@/components/ui';
+import { z } from 'zod';
+import { LibraryPage } from '@/pages/library';
+
+const searchSchema = z.object({
+  tab: z.enum(['scheduled', 'unscheduled']).catch('unscheduled'),
+});
 
 export const Route = createFileRoute('/home/library')({
-  component: () => <Text>Library</Text>,
+  validateSearch: searchSchema,
+  component: () => <LibraryPage />,
 });

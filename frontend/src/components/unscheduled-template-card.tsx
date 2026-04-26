@@ -1,30 +1,19 @@
 import { CardStack } from '@/components/card-stack';
 import { Box, Text } from '@/components/ui';
-import { Calendar, ChevronRight, User } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
-interface AssignmentCardProps {
+// TODO: pass childIds and display as overlapping avatars below title
+// TODO: should also accept number of subtasks and display that below title as well
+
+interface UnscheduledTemplateCardProps {
   title: string;
   value: number;
-  childName: string;
-  ttl?: number;
 }
 
-export const AssignmentCard = ({
+export const UnscheduledTemplateCard = ({
   title,
   value,
-  childName,
-  ttl,
-}: AssignmentCardProps) => {
-  // const ttl = 1745193600; // for testing
-  const dueDate = ttl
-    ? new Date(ttl * 1000).toLocaleDateString(undefined, {
-        month: 'short',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: '2-digit',
-      })
-    : null;
-
+}: UnscheduledTemplateCardProps) => {
   return (
     <CardStack.Item>
       <Box display="flex" flexDirection="row" alignItems="center" gap="4">
@@ -33,18 +22,12 @@ export const AssignmentCard = ({
             {title}
           </Text>
 
-          <Box display="flex" flexDirection="row" gap="2" alignItems="center">
+          {/* <Box display="flex" flexDirection="row" gap="2" alignItems="center">
             <Box display="flex" alignItems="center" gap="1" color="fg.muted">
               <User size={12} strokeWidth={1.5} />
               <Text textStyle="xs">{childName}</Text>
             </Box>
-            {dueDate && (
-              <Box display="flex" alignItems="center" gap="1" color="fg.muted">
-                <Calendar size={12} strokeWidth={1.5} />
-                <Text textStyle="xs">{dueDate}</Text>
-              </Box>
-            )}
-          </Box>
+          </Box> */}
         </Box>
       </Box>
 

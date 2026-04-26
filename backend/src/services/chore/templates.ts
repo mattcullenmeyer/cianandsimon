@@ -137,7 +137,10 @@ export async function deleteTemplate({
 
   if (!result.Attributes) return false;
 
-  if (result.Attributes.recurrence_rrule && process.env.NODE_ENV === 'production') {
+  if (
+    result.Attributes.recurrence_rrule &&
+    process.env.NODE_ENV === 'production'
+  ) {
     await deleteSchedule({ familyId, templateId });
   }
 
@@ -150,12 +153,20 @@ export async function listTemplates({
 }: {
   familyId: string;
   type?: 'scheduled' | 'unscheduled';
-}): Promise<Array<{ templateId: string; title: string; value: number }>> {
+}): Promise<
+  Array<{
+    templateId: string;
+    title: string;
+    value: number;
+    assignedChildIds: string[];
+    subtaskCount: number;
+  }>
+> {
   const result = await dynamodb.send(
     new QueryCommand({
       TableName: process.env.DYNAMODB_TABLE_NAME,
       KeyConditionExpression: 'PK = :pk AND begins_with(SK, :prefix)',
-      ProjectionExpression: 'templateId, title, #value',
+      ProjectionExpression: 'templateId, title, #value, assignments, subtasks',
       ExpressionAttributeNames: { '#value': 'value' },
       ExpressionAttributeValues: {
         ':pk': { S: `FAM#${familyId}` },
@@ -174,5 +185,7 @@ export async function listTemplates({
     templateId: item.templateId.S!,
     title: item.title.S!,
     value: Number(item.value.N!),
+    assignedChildIds: (item.assignments.L ?? []).map((a) => a.M!.childId.S!),
+    subtaskCount: (item.subtasks.L ?? []).length,
   }));
 }

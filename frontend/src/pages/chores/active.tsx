@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getRouteApi } from '@tanstack/react-router';
 import { AssignmentCard } from '@/components/assignment-card';
+import { CardStack } from '@/components/card-stack';
 import { Box, Button, Spinner, Text } from '@/components/ui';
 import { config } from '@/config';
 
@@ -73,12 +74,7 @@ export const ActiveChoresTab = () => {
             <Text color="fg.muted">No active chores.</Text>
           )}
           {!loading && !error && assignments.length > 0 && (
-            <Box
-              display="flex"
-              flexDirection="column"
-              borderWidth="2px"
-              borderRadius="xl"
-            >
+            <CardStack.Root>
               {assignments.map((assignment) => (
                 <AssignmentCard
                   key={assignment.assignmentId}
@@ -90,7 +86,7 @@ export const ActiveChoresTab = () => {
                   ttl={assignment.ttl}
                 />
               ))}
-            </Box>
+            </CardStack.Root>
           )}
         </Box>
 

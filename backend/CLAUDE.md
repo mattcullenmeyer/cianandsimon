@@ -27,3 +27,7 @@ Both entry points import the shared Express app from `src/server.ts`, which defi
 - Strict mode with all strict flags enabled
 - `noUnusedLocals` and `noUnusedParameters` are enforced
 - Target ES2022, module system NodeNext
+
+### Conventions
+- Functions always use a named parameter object, never positional arguments
+- Always use Zod for schema validation (request bodies, query params, etc.) — never cast with `as`

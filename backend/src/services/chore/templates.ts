@@ -144,9 +144,13 @@ export async function deleteTemplate({
   return true;
 }
 
-export async function listTemplates(
-  familyId: string
-): Promise<Array<{ templateId: string; title: string; value: number }>> {
+export async function listTemplates({
+  familyId,
+  type,
+}: {
+  familyId: string;
+  type?: 'scheduled' | 'unscheduled';
+}): Promise<Array<{ templateId: string; title: string; value: number }>> {
   const result = await dynamodb.send(
     new QueryCommand({
       TableName: process.env.DYNAMODB_TABLE_NAME,
@@ -157,6 +161,12 @@ export async function listTemplates(
         ':pk': { S: `FAM#${familyId}` },
         ':prefix': { S: 'TMPL#' },
       },
+      ...(type === 'scheduled' && {
+        FilterExpression: 'attribute_exists(recurrence_rrule)',
+      }),
+      ...(type === 'unscheduled' && {
+        FilterExpression: 'attribute_not_exists(recurrence_rrule)',
+      }),
     })
   );
 

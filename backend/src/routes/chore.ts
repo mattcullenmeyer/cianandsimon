@@ -241,9 +241,18 @@ router.get('/template/:templateId', requireFamilyAuth, async (req, res) => {
   res.status(200).json(template);
 });
 
-router.get('/templates', requireFamilyAuth, async (_req, res) => {
+const listTemplatesSchema = z.object({
+  type: z.enum(['scheduled', 'unscheduled']).optional(),
+});
+
+router.get('/templates', requireFamilyAuth, async (req, res) => {
+  const result = listTemplatesSchema.safeParse(req.query);
+  if (!result.success) {
+    res.status(400).json({ error: result.error.issues });
+    return;
+  }
   const { familyId } = res.locals;
-  const templates = await listTemplates(familyId);
+  const templates = await listTemplates({ familyId, type: result.data.type });
   res.status(200).json({ templates });
 });
 

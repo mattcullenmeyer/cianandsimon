@@ -25,7 +25,8 @@ export const input = {
   variants: {
     variant: {
       outline: {
-        borderWidth: '1px',
+        borderWidth: '2px',
+        borderRadius: 'xl',
         borderColor: 'border',
         focusVisibleRing: 'inside',
         _invalid: {

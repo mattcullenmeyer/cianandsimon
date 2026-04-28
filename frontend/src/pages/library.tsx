@@ -2,6 +2,7 @@ import { useNavigate, useSearch } from '@tanstack/react-router';
 import { ScheduledTemplates } from '@/pages/library/scheduled';
 import { UnscheduledTemplates } from '@/pages/library/unscheduled';
 import { Box, Button, Tabs, Text } from '@/components/ui';
+import { CreateTemplateDialog } from '@/components/create-template-dialog';
 
 const TABS = [
   { value: 'unscheduled', label: 'Unscheduled' },
@@ -57,13 +58,7 @@ export function LibraryPage() {
           </Box>
 
           <Box pt="4" p="1">
-            <Button
-              width="full"
-              justifyContent="center"
-              css={{ '--btn-bg': '{colors.green.primary}' }}
-            >
-              CREATE CHORE
-            </Button>
+            <CreateTemplateDialog />
           </Box>
         </Box>
       </Box>

@@ -100,8 +100,12 @@ export const ChoresCard = ({ title, localStorageKey }: ChoresCardProps) => {
           <ToDoButton
             key={item.label}
             label={item.label}
+            amount="$0.25"
             checked={item.checked}
-            isEditing={isEditing}
+            // isEditing={isEditing}
+            subtasks={
+              item.label === 'Clothes' ? ['Cereal', 'Milk', 'Spoon'] : undefined
+            }
             onToggle={() =>
               toggle({
                 key: localStorageKey,

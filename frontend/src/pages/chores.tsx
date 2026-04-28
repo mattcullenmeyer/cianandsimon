@@ -1,5 +1,16 @@
 import { Box, Text } from '@/components/ui';
 import { ChoresCard } from '@/components/chores-card';
+// import { RRule } from 'rrule';
+
+// const rule = new RRule({
+//   freq: RRule.DAILY,
+//   // byweekday: [RRule.TU.nth(2)],
+//   byhour: 23,
+//   byminute: 10,
+// });
+
+// const ruleString = rule.toString();
+// console.log(ruleString);
 
 export const ChoresPage = () => {
   return (

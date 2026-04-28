@@ -1,5 +1,5 @@
-import { fieldAnatomy } from '@ark-ui/react/anatomy'
-import { defineSlotRecipe } from '@pandacss/dev'
+import { fieldAnatomy } from '@ark-ui/react/anatomy';
+import { defineSlotRecipe } from '@pandacss/dev';
 
 export const field = defineSlotRecipe({
   className: 'field',
@@ -17,7 +17,8 @@ export const field = defineSlotRecipe({
       gap: '0.5',
       textAlign: 'start',
       userSelect: 'none',
-      textStyle: 'label',
+      textStyle: 'sm',
+      fontWeight: 'medium',
       _disabled: {
         layerStyle: 'disabled',
       },
@@ -37,4 +38,4 @@ export const field = defineSlotRecipe({
       textStyle: 'sm',
     },
   },
-})
+});

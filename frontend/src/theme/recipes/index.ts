@@ -1,3 +1,4 @@
+import { dialog } from './dialog';
 import { menu } from './menu';
 import { tabs } from './tabs';
 import { avatar } from './avatar';
@@ -31,6 +32,7 @@ export const recipes = {
   avatar,
   tabs,
   menu,
+  dialog,
 };
 export const slotRecipes = {
   card,

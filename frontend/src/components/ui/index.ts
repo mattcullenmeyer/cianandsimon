@@ -9,6 +9,7 @@ export {
 } from './button';
 export * as Card from './card';
 export * as Checkbox from './checkbox';
+export * as Dialog from './dialog';
 export * as Field from './field';
 export { Group, type GroupProps } from './group';
 export { Input, type InputProps } from './input';

@@ -27,26 +27,26 @@ export const AssignmentCard = ({
 
   return (
     <CardStack.Item>
-      <Box display="flex" flexDirection="row" alignItems="center" gap="4">
-        <Box display="flex" flexDirection="column" gap="0.5">
-          <Text textStyle="sm" fontWeight="medium">
-            {title}
-          </Text>
+      {/* <Box display="flex" flexDirection="row" alignItems="center" gap="4"> */}
+      <Box display="flex" flexDirection="column" gap="0.5">
+        <Text textStyle="sm" fontWeight="medium">
+          {title}
+        </Text>
 
-          <Box display="flex" flexDirection="row" gap="2" alignItems="center">
-            <Box display="flex" alignItems="center" gap="1" color="fg.muted">
-              <User size={12} strokeWidth={1.5} />
-              <Text textStyle="xs">{childName}</Text>
-            </Box>
-            {dueDate && (
-              <Box display="flex" alignItems="center" gap="1" color="fg.muted">
-                <Calendar size={12} strokeWidth={1.5} />
-                <Text textStyle="xs">{dueDate}</Text>
-              </Box>
-            )}
+        <Box display="flex" flexDirection="row" gap="2" alignItems="center">
+          <Box display="flex" alignItems="center" gap="1" color="fg.muted">
+            <User size={12} strokeWidth={1.5} />
+            <Text textStyle="xs">{childName}</Text>
           </Box>
+          {dueDate && (
+            <Box display="flex" alignItems="center" gap="1" color="fg.muted">
+              <Calendar size={12} strokeWidth={1.5} />
+              <Text textStyle="xs">{dueDate}</Text>
+            </Box>
+          )}
         </Box>
       </Box>
+      {/* </Box> */}
 
       <Box
         display="flex"

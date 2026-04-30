@@ -14,10 +14,10 @@ export const semanticTokens = defineSemanticTokens({
     },
     blue: {
       primary: {
-        value: { base: '{colors.cyan.500}' },
+        value: { base: '{colors.sky.500}' }, // changed from cyan
       },
       secondary: {
-        value: { base: '{colors.cyan.400}' },
+        value: { base: '{colors.sky.400}' },
       },
     },
     orange: {

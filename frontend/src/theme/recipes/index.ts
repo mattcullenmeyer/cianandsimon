@@ -1,3 +1,4 @@
+import { switchRecipe } from './switch';
 import { dialog } from './dialog';
 import { menu } from './menu';
 import { tabs } from './tabs';
@@ -33,6 +34,7 @@ export const recipes = {
   tabs,
   menu,
   dialog,
+  switchRecipe,
 };
 export const slotRecipes = {
   card,

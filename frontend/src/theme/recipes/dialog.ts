@@ -64,7 +64,8 @@ export const dialog = defineSlotRecipe({
       width: '100%',
       zIndex: 'calc(var(--dialog-z-index) + var(--layer-index, 0))',
       // py: { base: '4', md: '6' },
-      gap: { base: '4', md: '6' },
+      // gap: { base: '4', md: '6' },
+      gap: '6',
       _open: {
         animationDuration: 'slowest',
       },
@@ -96,7 +97,7 @@ export const dialog = defineSlotRecipe({
       justifyContent: 'flex-end',
       flex: '0',
       gap: '3',
-      px: { base: '4', md: '6' },
+      p: { base: '4', md: '6' },
     },
   },
   defaultVariants: {

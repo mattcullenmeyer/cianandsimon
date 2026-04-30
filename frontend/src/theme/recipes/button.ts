@@ -4,7 +4,7 @@ export const button = defineRecipe({
   className: 'button',
   jsx: ['Button', 'IconButton', 'CloseButton', 'ButtonGroup'],
   base: {
-    letterSpacing: '{letterSpacings.wider}',
+    letterSpacing: '{letterSpacings.wide}',
     alignItems: 'center',
     appearance: 'none',
     borderRadius: 'xl',
@@ -12,7 +12,7 @@ export const button = defineRecipe({
     display: 'inline-flex',
     flexShrink: '0',
     fontWeight: 'medium',
-    gap: '2',
+    gap: '1',
     isolation: 'isolate',
     justifyContent: 'space-between', // center
     outline: '0',

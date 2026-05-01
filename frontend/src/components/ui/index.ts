@@ -13,10 +13,12 @@ export * as Dialog from './dialog';
 export * as Field from './field';
 export { Group, type GroupProps } from './group';
 export { Input, type InputProps } from './input';
+export { InputGroup, type InputGroupProps } from './input-group';
 export { Loader, type LoaderProps } from './loader';
 export * as Menu from './menu';
 export * as PinInput from './pin-input';
 export * as RadioGroup from './radio-group';
+export * as SegmentGroup from './segment-group';
 export {
   Skeleton,
   SkeletonCircle,

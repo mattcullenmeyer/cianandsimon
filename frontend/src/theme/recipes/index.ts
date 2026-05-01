@@ -1,3 +1,5 @@
+import { inputGroup } from './input-group';
+import { segmentGroup } from './segment-group';
 import { switchRecipe } from './switch';
 import { dialog } from './dialog';
 import { menu } from './menu';
@@ -35,6 +37,8 @@ export const recipes = {
   menu,
   dialog,
   switchRecipe,
+  segmentGroup,
+  inputGroup,
 };
 export const slotRecipes = {
   card,
